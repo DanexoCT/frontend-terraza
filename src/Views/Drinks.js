@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ProductModal from './ProductModal';
 
 function Drinks() {
   const [drinks, setDrinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDrink, setSelectedDrink] = useState(null);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/products`)
@@ -22,6 +25,16 @@ function Drinks() {
       });
   }, []);
 
+  const openModal = (drink) => {
+    setSelectedDrink(drink);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedDrink(null);
+  };
+
   return (
     <div className="drinks-view">
       {loading ? (
@@ -31,18 +44,31 @@ function Drinks() {
       ) : drinks.length > 0 ? (
         <div className="product-list">
           {drinks.map((drink) => (
-            <div className="product-card" key={drink._id}>
+            <div
+              className="product-card"
+              key={drink._id}
+              onClick={() => openModal(drink)} // Abre el modal al hacer clic
+            >
               <img src={drink.imagen} alt={drink.nombre} className="product-image" />
-              <div class="product-info">
+              <div className="product-info">
                 <h2 className="product-name">{drink.nombre}</h2>
                 <p className="product-description">{drink.descripcion}</p>
               </div>
-                <p className="product-price">${drink.precio.toFixed(2)}</p>
+              <p className="product-price">${drink.precio.toFixed(2)}</p>
             </div>
           ))}
         </div>
       ) : (
         <p>No hay bebidas disponibles.</p>
+      )}
+
+      {/* Aquí se incluye el modal */}
+      {selectedDrink && (
+        <ProductModal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          product={selectedDrink}
+        />
       )}
     </div>
   );

@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+/* Estilos generales */
+.menu-title {
+  font-family: 'Dancing Script', cursive;
+  color: #000000;
+  font-size: 50px; /* Tamaño de fuente reducido */
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.hr-container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-image {
+  width: 80vw; /* Logo adaptable al 80% del ancho de la pantalla */
+  max-width: 400px; /* Máximo ancho del logo */
+  margin-top: 0;
+}
+
+.custom-hr {
+  border: none;
+  height: 1px;
+  background-color: rgb(202, 202, 202);
+  width: 90%; /* Ancho de la línea horizontal */
+  margin: 20px auto; /* Margen vertical reducido */
+}
+
+.app {
+  text-align: center;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #ffffff;
+  padding: 0;
+  color: #000000;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap; /* Permitir que las tarjetas se muevan a la siguiente línea */
+  justify-content: center; /* Centrar tarjetas */
+  margin: 10px;
+}
+
+/* Estilo de tarjetas de productos */
+.product-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 10px;
+  width: calc(25% - 10px);
+  max-width: 300px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative; /* Necesario para posicionar la etiqueta */
+}
+
+/* Crear la etiqueta de precio */
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* Ajustar la posición vertical */
+  right: 15px; /* Ajustar la posición horizontal */
+  width: 50px; /* Ancho de la etiqueta */
+  height: 50px; /* Alto de la etiqueta */
+  background-color: #af995b; /* Color de la etiqueta */
+}
+
+/* Crear el triángulo blanco */
+.product-card::after {
+  content: "";
+  position: absolute;
+  top: 20px; /* Ajustar la posición vertical */
+  right: 15px; /* Ajustar la posición horizontal */
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent; /* Parte izquierda del triángulo */
+  border-right: 25px solid transparent; /* Parte derecha del triángulo */
+  border-top: 11px solid rgb(255, 252, 252); /* Parte superior del triángulo */
+  transform: rotate(180deg); 
+}
+
+/* Estilo para el precio dentro de la etiqueta */
+.product-price {
+  position: absolute;
+  top: -14px; /* Ajustar para centrar verticalmente en la etiqueta */
+  right: 18px; /* Ajustar la posición horizontal */
+  font-size: 0.9em; /* Tamaño de fuente */
+  color: white; /* Color del texto */
+  font-weight: bold;
+  white-space: nowrap; /* Evitar saltos de línea */
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  width: 80px; /* Ancho reducido de la imagen */
+  height: 70px; /* Alto reducido de la imagen */
+  object-fit: cover; /* Mantener proporción de la imagen */
+  background-color: #ffffff;
+  margin-right: 10px; /* Espacio entre imagen y texto */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+.product-info {
+  flex: 1; /* Ocupa el espacio restante */
+  text-align: left; /* Alinear texto a la izquierda */
+}
+
+.product-name {
+  font-size: 0.9em; /* Tamaño de fuente ajustado */
+  margin: 0;
+  padding: 2px 0; /* Padding reducido */
+  white-space: nowrap; /* No permite saltos de línea */
+  overflow: hidden; /* Oculta texto que desborda */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es largo */
+  max-width: 150px; /* Ancho máximo ajustado */
+}
+
+.product-description {
+  font-size: 0.8em; /* Tamaño de fuente ajustado */
+  color: #666;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limitar a 2 líneas */
+  -webkit-box-orient: vertical;
+  margin-top: 2px; /* Espacio superior */
+}
+
+/* Estilos de mensaje de error */
+.error-message {
+  color: #ff4d4f;
+}
+
+
+
+
+
+
+
+@media (max-width: 684px) {
+  .product-card {
+    width: 100%; 
+    flex-direction: row; 
+    align-items: center; 
+    padding: 10px;
+    margin: 5px 0; 
+  }
+  .product-image {
+    width: 80px; 
+    height: 60px;
+    margin-right: 10px; 
+    border-radius: 4px;
+  }
+  .product-info {
+    flex: 1;
+    text-align: left;
+  }
+  .product-name {
+    font-size: 1em;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-description {
+    font-size: 0.9em;
+    margin-top: 2px;
+  }
+  .product-price {
+    font-size: 0.8em;
+    margin-top: 5px;
+    top: -4px;
+    right: 20px;
+  }
+  .menu-title {
+    font-size: 250%;
+  }
+}
+
+@media (min-width: 685px) and (max-width: 1015px) {
+  .product-card {
+    width: calc(50% - 10px);
+    font-size: 0.9em; 
+  }
+  .product-price {
+    top: -12px; 
+    right: 20px; 
+  }
+  .menu-title {
+    font-size: 300%;
+  }
+}
+
+@media (min-width: 1016px) and (max-width: 1600px) {
+  .product-card {
+    width: calc(33.33% - 10px);
+  }
+  .menu-title {
+    font-size: 500%;
+  }
+}

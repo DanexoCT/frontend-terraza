@@ -1,38 +1,36 @@
 import React, { useState } from 'react';
-import './Navbar.css';
 import { Link } from 'react-router-dom';
+import './Navbar.css';
 
-function Navbar() {
-  const [activeSection, setActiveSection] = useState('');
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <nav className="navbar">
-      <ul className="navbar-list">
-        <li 
-          className={activeSection === 'platillos' ? 'active' : ''} 
-        >
-          <Link to="/" onClick={() => setActiveSection('platillos')}>
-            Platillos
-          </Link>
-        </li>
-        <li 
-          className={activeSection === 'bebidas' ? 'active' : ''} 
-        >
-          <Link to="/bebidas" onClick={() => setActiveSection('bebidas')}>
-            Bebidas
-          </Link>
-        </li>
-        <li 
-          className={activeSection === 'otros' ? 'active' : ''} 
-        >
-          <Link to="/otros" onClick={() => setActiveSection('otros')}>
-            Otros
-          </Link>
-        </li>
-      </ul>
+    <nav className="navbar-main">
+      <img
+        src="/images/La-terraza-Shade-Logo.png"
+        alt="LaTerraza Logo"
+        className="logo-image"
+      />
+      
+      {/* Icono de menú de hamburguesa */}
+      <div className="menu-icon" onClick={toggleMenu}>
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+      </div>
+
+      {/* Enlaces de navegación */}
+      <div className={`nav-links ${isOpen ? 'open' : ''}`}>
+        <Link to="/login" className="nav-link">Iniciar sesión</Link>
+        <Link to="/register" className="nav-link">Registrarse</Link>
+      </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
-

@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Footer from './Views/Footer';
-import Navbar from './Views/Navbar';
-import Drinks from './Views/Drinks';
-import Others from './Views/Others'; 
+import NavbarProducts from './NavbarProducts';
+import Navbar from './Navbar';
+import Drinks from './Drinks';
+import Others from './Others';
+import ProductModal from './ProductModal';
+import Footer from './Footer';
 
 function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/products`)
       .then(response => {
-        const filteredProducts = response.data.filter(product => 
+        const filteredProducts = response.data.filter(product =>
           product.status === 'disponible' && product.tipo === 'platillo'
         );
 
@@ -28,30 +32,30 @@ function App() {
       });
   }, []);
 
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <Router>
-      <div className="App">
-      <div className="hr-container">
-        <img 
-            src="/images/La-terraza-Shade-Logo.png" 
-            alt="LaTerraza Logo" 
-            className="logo-image" 
-          />
-          </div>
-        <div className="hr-container">
-          <hr className="custom-hr" />
-        </div>
+      <Navbar />
+      <div className="app">
+      <br/><br/><br/>
         <h4 className="menu-title">Nuestro Menú</h4>
-        <div className="hr-container">
-          <hr className="custom-hr" />
-        </div>
-
+        <br/><br/>
+        
         {/* Barra de Navegación */}
-        <Navbar />
-
+        <NavbarProducts />
+        <br/><br/>
         <Routes>
           <Route path="/" element={
-            <header className="App-header">
+            <header className="app-header">
               {loading ? (
                 <p>Cargando productos...</p>
               ) : error ? (
@@ -59,13 +63,17 @@ function App() {
               ) : products.length > 0 ? (
                 <div className="product-list">
                   {products.map((product) => (
-                    <div className="product-card" key={product._id}>
+                    <div
+                      className="product-card"
+                      key={product._id}
+                      onClick={() => openModal(product)} // Abre el modal al hacer clic
+                    >
                       <img src={product.imagen} alt={product.nombre} className="product-image" />
-                      <div class="product-info">
+                      <div className="product-info">
                         <h2 className="product-name">{product.nombre}</h2>
                         <p className="product-description">{product.descripcion}</p>
                       </div>
-                        <p className="product-price">${product.precio.toFixed(2)}</p>
+                      <p className="product-price">${product.precio.toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
@@ -74,11 +82,20 @@ function App() {
               )}
             </header>
           } />
-          
-          <Route path="/bebidas" element={<Drinks />} />
-          <Route path="/otros" element={<Others />} />
+          <Route path="/bebidas" element={<Drinks openModal={openModal} />} />
+          <Route path="/otros" element={<Others openModal={openModal} />} />
         </Routes>
-
+        <br/><br/>
+        
+        {/* Aquí se incluye el modal */}
+        {selectedProduct && (
+          <ProductModal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            product={selectedProduct}
+          />
+        )}
+        
         <Footer />
       </div>
     </Router>
