@@ -20,38 +20,37 @@
     text-decoration: none;
     color: #000000;
     font-weight: bold;
-    padding: 10px;
-    margin: 0 15px;
-    border-radius: 8px;
+    padding: 15px;
+    margin: 0 10px;
   }
   
   .nav-link:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Fondo sutil al hacer hover */
   }
   
-
-  @media (max-width: 475px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 80px;
-        right: 15px;
-        left: 200px;
-        background-color: #ffffff;
-        flex-direction: column;
-        padding: 10px 0;
-        gap: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 2px solid #af995b;
-        border-radius: 10px;
-        z-index: 1;
-        transition: transform 0.3s ease-in-out;
-        transform: translateY(-100%);
-      }
   
+  @media (max-width: 415px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 65%; /* Centra horizontalmente */
+      transform: translate(-50%, -100%); /* Ajusta para centrar y ocultar inicialmente */
+      width: 150px; /* Ancho fijo para mantener el borde estable */
+      background-color: #ffffff;
+      flex-direction: column;
+      padding: 5px 0;
+      gap: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 2px solid #af995b;
+      border-radius: 10px;
+      z-index: 1;
+      transition: transform 0.3s ease-in-out;
+      align-items: center;
+    }
     .nav-links.open {
       display: flex;
-      transform: translateY(0);
+      transform: translate(-40%, 0); /* Ajuste para mostrar en el centro */
     }
   
     .menu-icon {
@@ -68,4 +67,43 @@
       border-radius: 2px;
     }
   }
+
+  @media (min-width: 416px) and (max-width: 475px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 70%; /* Centra horizontalmente */
+      transform: translate(-50%, -100%); /* Ajusta para centrar y ocultar inicialmente */
+      width: 150px; /* Ancho fijo para mantener el borde estable */
+      background-color: #ffffff;
+      flex-direction: column;
+      padding: 5px 0;
+      gap: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 2px solid #af995b;
+      border-radius: 10px;
+      z-index: 1;
+      transition: transform 0.3s ease-in-out;
+      align-items: center;
+    }
   
+    .nav-links.open {
+      display: flex;
+      transform: translate(-40%, 0); /* Ajuste para mostrar en el centro */
+    }
+  
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+  
+    .menu-icon .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #af995b;
+      border-radius: 2px;
+    }
+  }

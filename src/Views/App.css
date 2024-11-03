@@ -4,7 +4,7 @@
 .menu-title {
   font-family: 'Dancing Script', cursive;
   color: #000000;
-  font-size: 50px; /* Tamaño de fuente reducido */
+  font-size: 70px; /* Tamaño de fuente reducido */
   font-weight: 700;
   margin: 0;
   white-space: nowrap;
@@ -13,12 +13,6 @@
 .hr-container {
   display: flex;
   justify-content: center;
-}
-
-.logo-image {
-  width: 80vw; /* Logo adaptable al 80% del ancho de la pantalla */
-  max-width: 400px; /* Máximo ancho del logo */
-  margin-top: 0;
 }
 
 .custom-hr {
@@ -74,7 +68,7 @@
   content: "";
   position: absolute;
   top: -20px; /* Ajustar la posición vertical */
-  right: 15px; /* Ajustar la posición horizontal */
+  right: 10px; /* Ajustar la posición horizontal */
   width: 50px; /* Ancho de la etiqueta */
   height: 50px; /* Alto de la etiqueta */
   background-color: #af995b; /* Color de la etiqueta */
@@ -85,7 +79,7 @@
   content: "";
   position: absolute;
   top: 20px; /* Ajustar la posición vertical */
-  right: 15px; /* Ajustar la posición horizontal */
+  right: 10px; /* Ajustar la posición horizontal */
   width: 0;
   height: 0;
   border-left: 25px solid transparent; /* Parte izquierda del triángulo */
@@ -98,7 +92,7 @@
 .product-price {
   position: absolute;
   top: -14px; /* Ajustar para centrar verticalmente en la etiqueta */
-  right: 18px; /* Ajustar la posición horizontal */
+  right: 12px; /* Ajustar la posición horizontal */
   font-size: 0.9em; /* Tamaño de fuente */
   color: white; /* Color del texto */
   font-weight: bold;
@@ -143,6 +137,41 @@
   margin-top: 2px; /* Espacio superior */
 }
 
+/* Estilo para la flecha flotante */
+.scroll-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 40px;
+  background-color: #af995b;
+  color: #fff;
+  padding: 10px;
+  border-radius: 20%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+  animation: float 2s ease-in-out infinite; /* Añade animación de flotación */
+}
+
+/* Definición de la animación de flotación */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0); /* Posición inicial y final */
+  }
+  50% {
+    transform: translateY(-5px); /* Mover hacia arriba en la mitad de la animación */
+  }
+}
+
+/* Mostrar/ocultar la flecha */
+.scroll-to-top.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Estilos de mensaje de error */
 .error-message {
   color: #ff4d4f;
@@ -150,9 +179,13 @@
 
 
 
-
-
-
+@media (max-width: 500px) {
+  .scroll-to-top {
+    left: 45%;       /* Coloca el botón en el centro horizontal */
+    transform: translateX(-50%);  /* Mueve el botón hacia atrás por la mitad de su ancho para centrarlo */
+    right: auto;     /* Asegura que no haya margen desde la derecha */
+  }
+}
 
 @media (max-width: 684px) {
   .product-card {
@@ -164,7 +197,7 @@
   }
   .product-image {
     width: 80px; 
-    height: 60px;
+    height: 70px;
     margin-right: 10px; 
     border-radius: 4px;
   }
@@ -187,10 +220,10 @@
     font-size: 0.8em;
     margin-top: 5px;
     top: -4px;
-    right: 20px;
+    right: 15px;
   }
   .menu-title {
-    font-size: 250%;
+    font-size: 300%;
   }
 }
 
@@ -201,10 +234,10 @@
   }
   .product-price {
     top: -12px; 
-    right: 20px; 
+    right: 15px; 
   }
   .menu-title {
-    font-size: 300%;
+    font-size: 400%;
   }
 }
 
