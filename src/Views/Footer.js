@@ -21,7 +21,7 @@ function Footer() {
 
         <div className="footer-section">
           <h3>Horario</h3>
-          <p>Lunes a Viernes: 09:00 am - 04:00 pm</p>
+          <p>Lunes a Viernes: 08:00 a.m. - 04:00 p.m.</p>
           <p>Sábado y Domingo: Cerrado</p>
         </div>
 
