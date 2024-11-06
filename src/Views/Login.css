@@ -135,3 +135,30 @@
   color: var(--link-hover-color);
   text-decoration: underline;
 }
+
+.login-tooltip {
+  visibility: visible; /* Visible cuando haya error */
+  width: 220px; /* Ajusta el ancho */
+  background-color: #dc3545; /* Fondo rojo */
+  color: #ffffff; /* Texto blanco */
+  text-align: center; /* Centrar texto */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 5px; /* Espaciado interno */
+  position: absolute; /* Posicionamiento absoluto */
+  bottom: 530px; /* Colocar justo debajo del campo */
+  left: 390px; /* Alinear a la izquierda */
+  z-index: 1000; /* Sobre otros elementos */
+  font-size: 12px; /* Tamaño de fuente pequeño */
+  transition: opacity 0.3s ease; /* Transición suave */
+}
+
+.login-tooltip::after {
+  content: ''; /* Flecha en el tooltip */
+  position: absolute;
+  top: 100%; /* Parte inferior del tooltip */
+  left: 10%; /* Centrar flecha */
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #dc3545 transparent transparent transparent; /* Flecha roja */
+}

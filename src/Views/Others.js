@@ -10,7 +10,7 @@ function Others() {
   const [selectedOther, setSelectedOther] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/products`)
+    axios.get(`http://localhost:5000/api/products`)
       .then(response => {
         const filteredOthers = response.data.filter(product => 
           product.status === 'disponible' && product.tipo === 'otro'
@@ -20,7 +20,7 @@ function Others() {
         setLoading(false);
       })
       .catch(err => {
-        setError('Error al cargar los productos otros.');
+        setError('Error al cargar otros productos.');
         setLoading(false);
       });
   }, []);

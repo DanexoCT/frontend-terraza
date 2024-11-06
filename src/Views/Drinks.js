@@ -10,7 +10,7 @@ function Drinks() {
   const [selectedDrink, setSelectedDrink] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/products`)
+    axios.get(`http://localhost:5000/api/products`)
       .then(response => {
         const filteredDrinks = response.data.filter(product => 
           product.status === 'disponible' && product.tipo === 'bebida'
@@ -20,7 +20,7 @@ function Drinks() {
         setLoading(false);
       })
       .catch(err => {
-        setError('Error al cargar las bebidas.');
+        setError('Error al cargar bebidas.');
         setLoading(false);
       });
   }, []);

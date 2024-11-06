@@ -22,7 +22,7 @@ function Main() {
   const location = useLocation(); // Hook para obtener la ruta actual
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/products`)
+    axios.get(`http://localhost:5000/api/products`)
       .then(response => {
         const filteredProducts = response.data.filter(product =>
           product.status === 'disponible' && product.tipo === 'platillo'
@@ -32,7 +32,7 @@ function Main() {
         setLoading(false);
       })
       .catch(err => {
-        setError('Error al cargar los productos.');
+        setError('Error al cargar platillos.');
         setLoading(false);
       });
   }, []);

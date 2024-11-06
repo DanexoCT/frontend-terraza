@@ -37,7 +37,7 @@
   align-items: center;
   margin-bottom: 15px;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
+  padding-bottom: 7px;
 }
 
 .input-icon {
@@ -90,4 +90,108 @@
 .back-to-home a:hover {
   color: var(--link-hover-color);
   text-decoration: underline;
+}
+
+
+
+
+/* Mensaje de éxito */
+.message.success {
+  background-color: #d4edda; /* Verde claro */
+  color: #155724; /* Texto verde oscuro */
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Mensaje de error general */
+.message.general-error {
+  background-color: #f8d7da; /* Rojo claro */
+  color: #721c24; /* Texto rojo oscuro */
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+
+
+
+/* Tooltip para el mensaje de error por correo ya en uso */
+.tooltip.email-error-tooltip {
+  visibility: visible;
+  width: 215px; /* Ajusta el ancho del tooltip */
+  background-color: #ffbb00; /* Fondo rojo */
+  color: #ffffff; /* Texto blanco */
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: relative;
+  margin-top: 10px;
+  font-size: 12px;
+  transition: opacity 0.3s ease;
+  bottom: 260px;
+  left: -15px;
+
+}
+
+.tooltip.email-error-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; /* Flecha en la parte inferior del tooltip */
+  left: 10%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffae00 transparent transparent transparent; /* Flecha roja */
+}
+
+
+
+/* Icono de advertencia en mensajes de error */
+.warning-icon {
+  margin-right: 3px; /* Espacio entre el ícono y el texto */
+  font-size: 12px; /* Tamaño del ícono */
+}
+
+
+
+
+.input-label {
+  position: relative;
+  margin-bottom: 20px; /* Espacio entre campos */
+}
+
+.error {
+  border: 2px solid #dc3545; /* Borde rojo para indicar error */
+}
+
+.tooltip {
+  visibility: visible; /* Asegúrate de que el tooltip sea visible cuando hay error */
+  width: 170px; /* Ajusta el ancho del tooltip según sea necesario */
+  background-color: #dc3545; /* Fondo rojo */
+  color: #ffffff; /* Texto blanco */
+  text-align: center; /* Centrar texto */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 5px; /* Espaciado interno */
+  position: absolute; /* Posicionamiento absoluto */
+  bottom: 40px; /* Colocarlo justo debajo del campo */
+  left: -10px; /* Alinear a la izquierda */
+  z-index: 1000; /* Asegúrate de que esté sobre otros elementos */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+  transition: opacity 0.3s ease; /* Transición suave */
+}
+
+.tooltip::after {
+  content: ''; /* Agregar una flecha al tooltip */
+  position: absolute;
+  top: 100%; /* Colocar la flecha justo en la parte inferior del tooltip */
+  left: 10%; /* Centrar flecha */
+  margin-left: -5px; /* Ajustar posición */
+  border-width: 5px;
+  border-style: solid;
+  border-color: #dc3545 transparent transparent transparent; /* Flecha roja */
 }
