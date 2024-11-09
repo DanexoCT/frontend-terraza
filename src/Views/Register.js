@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import './Register.css';
 
@@ -86,20 +86,20 @@ const Register = () => {
             <FaUser className="input-icon" />
             <input
               type="text"
-              placeholder="Apellido Paterno"
+              placeholder="Apellido Paterno (Opcional)"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              required
+              
             />
           </label>
           <label className="input-label">
             <FaUser className="input-icon" />
             <input
               type="text"
-              placeholder="Apellido Materno"
+              placeholder="Apellido Materno (Opcional)"
               value={secondLastName}
               onChange={(e) => setSecondLastName(e.target.value)}
-              required
+              
             />
           </label>
           <label className="input-label">
@@ -142,11 +142,13 @@ const Register = () => {
         </form>
 
         {successMessage && <div className="message success">{successMessage}</div>}
+
         {emailErrorMessage && (
           <div className="tooltip email-error-tooltip">
             <FaExclamationTriangle className="warning-icon" /> {emailErrorMessage}
           </div>
         )}
+
         {generalErrorMessage && <div className="message general-error">{generalErrorMessage}</div>}
 
         <div className="back-to-home">

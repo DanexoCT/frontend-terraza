@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import { useAuth } from './AuthContext'; // Importa el contexto de autenticación
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null); // referencia al menú
   const iconRef = useRef(null); // referencia al ícono de hamburguesa
+  const { isAuthenticated, logout } = useAuth(); // Obtén el estado de autenticación y la función de cierre de sesión del contexto
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -36,6 +39,12 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  // Maneja el cierre de sesión
+  const handleLogout = () => {
+    logout(); // Llama a la función logout del contexto
+    navigate('/login'); // Redirecciona al usuario a la página de login después de cerrar sesión
+  };
+
   return (
     <nav className="navbar-main">
       <img
@@ -53,8 +62,17 @@ const Navbar = () => {
 
       {/* Enlaces de navegación */}
       <div ref={menuRef} className={`nav-links ${isOpen ? 'open' : ''}`}>
-        <Link to="/login" className="nav-link" onClick={handleLinkClick}>Iniciar sesión</Link>
-        <Link to="/register" className="nav-link" onClick={handleLinkClick}>Registrarse</Link>
+        {isAuthenticated ? (
+          <>
+            <Link to="/profile" className="nav-link" onClick={handleLinkClick}>Perfil</Link>
+            <button onClick={handleLogout} className="nav-link logout-button">Cerrar sesión</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="nav-link" onClick={handleLinkClick}>Iniciar sesión</Link>
+            <Link to="/register" className="nav-link" onClick={handleLinkClick}>Registrarse</Link>
+          </>
+        )}
       </div>
     </nav>
   );

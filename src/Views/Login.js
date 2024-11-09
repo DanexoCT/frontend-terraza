@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
-import { FaGoogle, FaArrowLeft, FaEnvelope, FaLock } from 'react-icons/fa';
+import { FaGoogle, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import axios from 'axios';
+import { useAuth } from './AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // Error vacío al iniciar
+  const { login } = useAuth(); // Obtén login desde el contexto
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setErrorMessage('');
+    setErrorMessage(''); // Limpia cualquier mensaje de error previo
 
     try {
       const response = await axios.post('http://localhost:5000/api/customers/login', {
@@ -23,10 +26,15 @@ const Login = () => {
       });
 
       console.log('Inicio de sesión exitoso:', response.data);
-      navigate('/home');
+
+      // Si el backend devuelve un token, pásalo a la función login
+      const token = response.data.token; // Asegúrate de que el backend devuelva el token en este campo
+      login(token); // Cambia el estado de autenticación a verdadero con el token
+
+      navigate('/'); // Redirecciona después del inicio de sesión exitoso
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message || 'Error de autenticación');
       } else if (error.request) {
         setErrorMessage('No se recibió respuesta del servidor.');
       } else {
@@ -37,10 +45,17 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    // Limpia el mensaje de error cuando se desmonta el componente
+    return () => {
+      setErrorMessage('');
+    };
+  }, []);
+
   return (
     <div className="auth-wrapper">
       <div className="auth-container">
-        <h2>Iniciar Sesión</h2><br></br>
+        <h2>Iniciar Sesión</h2><br />
         <form onSubmit={handleSubmit}>
           <label className="input-label">
             <FaEnvelope className="input-icon" />
@@ -52,6 +67,13 @@ const Login = () => {
               required
             />
           </label>
+
+          {errorMessage && (
+            <div className="login-tooltip">
+              <FaExclamationTriangle className="warning-icon" /> {errorMessage}
+            </div>
+          )}
+
           <label className="input-label">
             <FaLock className="input-icon" />
             <input
@@ -62,12 +84,6 @@ const Login = () => {
               required
             />
           </label>
-
-          {errorMessage && (
-            <div className="login-tooltip">
-              {errorMessage}
-            </div>
-          )}
 
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Cargando...' : 'Iniciar Sesión'}

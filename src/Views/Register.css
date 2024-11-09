@@ -135,7 +135,6 @@
   transition: opacity 0.3s ease;
   bottom: 260px;
   left: -15px;
-
 }
 
 .tooltip.email-error-tooltip::after {

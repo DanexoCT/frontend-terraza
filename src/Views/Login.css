@@ -1,10 +1,3 @@
-:root {
-  /* Variables para colores personalizables */
-  --link-color: #007bff;
-  --link-hover-color: #0056b3;
-  --container-bg-color: #f0f0f0; /* Color de fondo gris claro para el contenedor */
-}
-
 .auth-wrapper {
   display: flex;
   align-items: center;
@@ -18,7 +11,7 @@
   margin: 20px;
   padding: 30px;
   border-radius: 10px;
-  background-color: var(--container-bg-color); /* Fondo gris claro */
+  background-color: #f0f0f0; /* Fondo gris claro */
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 }
@@ -107,13 +100,13 @@
 
 .forgot-password a,
 .create-account a {
-  color: var(--link-color); /* Color de los links */
+  color: #007bff;
   text-decoration: none;
 }
 
 .forgot-password a:hover,
 .create-account a:hover {
-  color: var(--link-hover-color); /* Color de hover de los links */
+  color: #0056b3;
   text-decoration: underline;
 }
 
@@ -124,7 +117,7 @@
 }
 
 .back-to-home a {
-  color: var(--link-color);
+  color: #007bff;
   text-decoration: none;
   font-weight: bold;
   padding: 10px;
@@ -132,24 +125,35 @@
 }
 
 .back-to-home a:hover {
-  color: var(--link-hover-color);
+  color: #0056b3;
   text-decoration: underline;
 }
 
+
+/* Icono de advertencia en mensajes de error */
+.warning-icon {
+  margin-right: 3px; /* Espacio entre el ícono y el texto */
+  font-size: 12px; /* Tamaño del ícono */
+}
+
+
 .login-tooltip {
+  display: flex;
   visibility: visible; /* Visible cuando haya error */
-  width: 220px; /* Ajusta el ancho */
+  width: 230px; /* Ajusta el ancho */
   background-color: #dc3545; /* Fondo rojo */
   color: #ffffff; /* Texto blanco */
   text-align: center; /* Centrar texto */
   border-radius: 5px; /* Bordes redondeados */
   padding: 5px; /* Espaciado interno */
-  position: absolute; /* Posicionamiento absoluto */
-  bottom: 530px; /* Colocar justo debajo del campo */
-  left: 390px; /* Alinear a la izquierda */
-  z-index: 1000; /* Sobre otros elementos */
+  position: relative; /* Posicionamiento absoluto */
+  margin-top: 10px;
   font-size: 12px; /* Tamaño de fuente pequeño */
   transition: opacity 0.3s ease; /* Transición suave */
+  align-items: center;
+  left: -17px; /* Alinear a la izquierda */
+  gap: 8px;
+  bottom: 5px; /* Colocarlo justo debajo del campo */
 }
 
 .login-tooltip::after {

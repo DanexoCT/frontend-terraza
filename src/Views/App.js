@@ -10,6 +10,8 @@ import ProductModal from './ProductModal';
 import Footer from './Footer';
 import Login from './Login';
 import Register from './Register';
+import Profile from './Profile';
+import { AuthProvider } from './AuthContext';
 
 function Main() {
   const [products, setProducts] = useState([]);
@@ -19,7 +21,7 @@ function Main() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const location = useLocation(); // Hook para obtener la ruta actual
+  const location = useLocation();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/products`)
@@ -27,7 +29,6 @@ function Main() {
         const filteredProducts = response.data.filter(product =>
           product.status === 'disponible' && product.tipo === 'platillo'
         );
-
         setProducts(filteredProducts);
         setLoading(false);
       })
@@ -47,21 +48,18 @@ function Main() {
     setSelectedProduct(null);
   };
 
-  // Mostrar u ocultar la flecha según el desplazamiento
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 200) {
         setIsVisible(true);
-      } else { 
+      } else {
         setIsVisible(false);
       }
     };
-
     window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
-  // Función para desplazarse al inicio
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -71,8 +69,8 @@ function Main() {
 
   return (
     <div className="app">
-      {/* Mostrar el título y la barra de navegación de productos solo si no estás en /login o /register */}
-      {!['/login', '/register'].includes(location.pathname) && (
+      {/* Mostrar el título y la barra de navegación de productos solo si no estás en /login, /register o /profile */}
+      {!['/login', '/register', '/profile'].includes(location.pathname) && (
         <>
           <br/><br/><br/>
           <h4 className="menu-title">Nuestro Menú</h4>
@@ -109,11 +107,11 @@ function Main() {
         } />
         <Route path="/bebidas" element={<Drinks openModal={openModal} />} />
         <Route path="/otros" element={<Others openModal={openModal} />} />
-        {/* Rutas de Login y Register */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes><br/><br/>
-      
+
       {selectedProduct && (
         <ProductModal
           isOpen={isModalOpen}
@@ -121,7 +119,7 @@ function Main() {
           product={selectedProduct}
         />
       )}
-      
+
       <Footer />
 
       {/* Flecha flotante para volver al inicio */}
@@ -139,10 +137,12 @@ function Main() {
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Main />
-    </Router>
+    <AuthProvider> {/* Envuelve tu app en el AuthProvider */}
+      <Router>
+        <Navbar /> {/* Navbar cambia según el estado de autenticación */}
+        <Main />
+      </Router>
+    </AuthProvider>
   );
 }
 
