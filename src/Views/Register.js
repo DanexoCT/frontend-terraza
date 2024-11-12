@@ -8,17 +8,29 @@ const Register = () => {
   const [lastName, setLastName] = useState('');
   const [secondLastName, setSecondLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [generalErrorMessage, setGeneralErrorMessage] = useState('');
 
-  const navigate = useNavigate(); // Hook de navegación
+  const navigate = useNavigate();
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[\w.-]+@(gmail|hotmail|outlook|yahoo)\.com$/i;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validateEmail(email)) {
+      setEmailError(true);
+      return;
+    } else {
+      setEmailError(false);
+    }
 
     if (password !== confirmPassword) {
       setConfirmPasswordError('La contraseña no coincide');
@@ -45,21 +57,16 @@ const Register = () => {
       const result = await response.json();
 
       setSuccessMessage('');
-      setEmailErrorMessage('');
       setGeneralErrorMessage('');
 
       if (response.ok) {
         setSuccessMessage(result.message);
         setTimeout(() => {
           setSuccessMessage('');
-          navigate('/login'); // Redirecciona al login después de 3 segundos
+          navigate('/login');
         }, 3000);
       } else {
-        if (result.message === 'Ya existe una cuenta con este correo.') {
-          setEmailErrorMessage(result.message);
-        } else {
-          setGeneralErrorMessage(result.message || 'Error al registrar');
-        }
+        setGeneralErrorMessage(result.message || 'Error al registrar');
       }
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
@@ -89,7 +96,6 @@ const Register = () => {
               placeholder="Apellido Paterno (Opcional)"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              
             />
           </label>
           <label className="input-label">
@@ -99,7 +105,6 @@ const Register = () => {
               placeholder="Apellido Materno (Opcional)"
               value={secondLastName}
               onChange={(e) => setSecondLastName(e.target.value)}
-              
             />
           </label>
           <label className="input-label">
@@ -143,12 +148,6 @@ const Register = () => {
 
         {successMessage && <div className="message success">{successMessage}</div>}
 
-        {emailErrorMessage && (
-          <div className="tooltip email-error-tooltip">
-            <FaExclamationTriangle className="warning-icon" /> {emailErrorMessage}
-          </div>
-        )}
-
         {generalErrorMessage && <div className="message general-error">{generalErrorMessage}</div>}
 
         <div className="back-to-home">
@@ -157,8 +156,18 @@ const Register = () => {
           </Link>
         </div>
       </div>
+
+      {emailError && (
+        <div className="modal">
+          <div className="modal-content">
+            <FaExclamationTriangle className="warning-icon" />
+            <p>El formato del correo no es el correcto</p>
+            <button onClick={() => setEmailError(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Register;
+export default Register;
