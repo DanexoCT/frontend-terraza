@@ -67,7 +67,7 @@ const CouponsView = () => {
 
     return (
         <div className="coupons-container">
-            <h1>Catálogo de Cupones</h1>
+            <h1>Nuestros Cupones</h1>
             <div className="coupons-grid">
                 {/* Mapea los cupones y crea una tarjeta para cada uno */}
                 {coupons.map((coupon) => (

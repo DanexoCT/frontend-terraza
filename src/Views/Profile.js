@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 import { FaEdit, FaSave, FaUserCircle } from 'react-icons/fa';
 import './Profile.css';
 
@@ -37,6 +38,8 @@ const Profile = () => {
   const handleInputChange = (field, value) => {
     setUpdatedData((prev) => ({ ...prev, [field]: value }));
   };
+  
+  axios.defaults.withCredentials = true;
 
   const handleSave = async (field) => {
     setLoading(true);
@@ -171,11 +174,11 @@ const Profile = () => {
           </div>
           <div className="form-group">
             <label>Identificador:</label>
-            <span>{profileData.userIdentifier}</span>
+            <span>{profileData.identificador}</span>
           </div>
           <div className="form-group">
             <label>Puntos:</label>
-            <span>{profileData.puntosAcumulados}</span>
+            <span>{profileData.puntos}</span>
           </div>
         </div>
       </div>

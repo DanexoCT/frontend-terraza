@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { useAuth } from './AuthContext'; // Usa el hook useAuth
+import { fetchUserProfile } from './Services.js';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,12 +38,18 @@ const Navbar = () => {
 
   // Obtiene los puntos acumulados cuando el usuario está autenticado
   useEffect(() => {
-    if (isAuthenticated && getUserPoints) {
-      getUserPoints()
-        .then((points) => setPuntos(points))
-        .catch((error) => console.error('Error obteniendo los puntos:', error));
-    }
-  }, [isAuthenticated, getUserPoints]);
+    const loadUserPoints = async () => {
+      if (isAuthenticated) {
+        try {
+          const profileData = await fetchUserProfile();
+          setPuntos(profileData.puntos); // Asumiendo que 'puntosAcumulados' es el campo para los puntos
+        } catch (error) {
+          console.error('Error obteniendo los puntos:', error);
+        }
+      }
+    };
+    loadUserPoints();
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     logout();
