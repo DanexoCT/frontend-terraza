@@ -22,19 +22,59 @@
     font-weight: bold;
     padding: 15px;
     margin: 0 10px;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    text-align: center;
   }
   
   .nav-link:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Fondo sutil al hacer hover */
+    transform: translateY(-2px); /* Levanta ligeramente el botón */
   }
   
+  .nav-points {
+    font-weight: bold;
+    color: #af995b;
+    margin-right: 15px;
+    padding: 15px; /* Ajusta hacia abajo */
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+  }
+
+  .nav-points:hover {
+    transform: translateY(-2px); /* Levanta ligeramente el botón */
+  }
+
+  .logout-button {
+    background-color: #af995b; 
+    color: #fff; /* Texto blanco */
+    font-size: 16px; /* Tamaño de fuente */
+    padding: 5px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
   
-  @media (max-width: 415px) {
+  .logout-button:hover {
+    background-color: #947c3b; /* Color de fondo más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Levanta ligeramente el botón */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Aumenta la sombra */
+  }
+  
+  .logout-button:active {
+    transform: translateY(0); /* Restablece la posición */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Reduce la sombra */
+  }
+  
+  @media (max-width: 475px) {
     .nav-links {
       display: none;
       position: absolute;
       top: 80px;
-      left: 65%; /* Centra horizontalmente */
+      left: 68%; /* Centra horizontalmente */
       transform: translate(-50%, -100%); /* Ajusta para centrar y ocultar inicialmente */
       width: 150px; /* Ancho fijo para mantener el borde estable */
       background-color: #ffffff;
@@ -68,12 +108,92 @@
     }
   }
 
-  @media (min-width: 416px) and (max-width: 475px) {
+  @media (min-width: 475px) and (max-width: 559px) {
     .nav-links {
       display: none;
       position: absolute;
       top: 80px;
-      left: 70%; /* Centra horizontalmente */
+      left: 73%; /* Centra horizontalmente */
+      transform: translate(-50%, -100%); /* Ajusta para centrar y ocultar inicialmente */
+      width: 150px; /* Ancho fijo para mantener el borde estable */
+      background-color: #ffffff;
+      flex-direction: column;
+      padding: 5px 0;
+      gap: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 2px solid #af995b;
+      border-radius: 10px;
+      z-index: 1;
+      transition: transform 0.3s ease-in-out;
+      align-items: center;
+    }
+  
+    .nav-links.open {
+      display: flex;
+      transform: translate(-40%, 0); /* Ajuste para mostrar en el centro */
+    }
+  
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+  
+    .menu-icon .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #af995b;
+      border-radius: 2px;
+    }
+  }
+
+  @media (min-width: 560px) and (max-width: 654px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 77%; /* Centra horizontalmente */
+      transform: translate(-50%, -100%); /* Ajusta para centrar y ocultar inicialmente */
+      width: 150px; /* Ancho fijo para mantener el borde estable */
+      background-color: #ffffff;
+      flex-direction: column;
+      padding: 5px 0;
+      gap: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 2px solid #af995b;
+      border-radius: 10px;
+      z-index: 1;
+      transition: transform 0.3s ease-in-out;
+      align-items: center;
+    }
+  
+    .nav-links.open {
+      display: flex;
+      transform: translate(-40%, 0); /* Ajuste para mostrar en el centro */
+    }
+  
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+  
+    .menu-icon .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #af995b;
+      border-radius: 2px;
+    }
+  }
+
+  @media (min-width: 655px) and (max-width: 764px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 80%; /* Centra horizontalmente */
       transform: translate(-50%, -100%); /* Ajusta para centrar y ocultar inicialmente */
       width: 150px; /* Ancho fijo para mantener el borde estable */
       background-color: #ffffff;

@@ -79,6 +79,7 @@ const Register = () => {
       <div className="auth-container">
         <h2>Registrarse</h2>
         <form onSubmit={handleSubmit}>
+
           <label className="input-label">
             <FaUser className="input-icon" />
             <input
@@ -89,6 +90,7 @@ const Register = () => {
               required
             />
           </label>
+
           <label className="input-label">
             <FaUser className="input-icon" />
             <input
@@ -98,6 +100,7 @@ const Register = () => {
               onChange={(e) => setLastName(e.target.value)}
             />
           </label>
+
           <label className="input-label">
             <FaUser className="input-icon" />
             <input
@@ -107,6 +110,7 @@ const Register = () => {
               onChange={(e) => setSecondLastName(e.target.value)}
             />
           </label>
+
           <label className="input-label">
             <FaEnvelope className="input-icon" />
             <input
@@ -116,7 +120,14 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            {emailError && (
+              <div className="tooltip email-error-tooltip">
+                <FaExclamationTriangle className="warning-icon" />
+                Por favor, ingresa un correo válido (Gmail, Hotmail, Outlook o Yahoo).
+              </div>
+            )}
           </label>
+
           <label className="input-label">
             <FaLock className="input-icon" />
             <input
@@ -127,6 +138,7 @@ const Register = () => {
               required
             />
           </label>
+
           <label className="input-label">
             <FaLock className="input-icon" />
             <input
@@ -143,6 +155,7 @@ const Register = () => {
               </div>
             )}
           </label>
+
           <button type="submit" className="register-button">Registrarse</button>
         </form>
 
@@ -157,17 +170,8 @@ const Register = () => {
         </div>
       </div>
 
-      {emailError && (
-        <div className="modal">
-          <div className="modal-content">
-            <FaExclamationTriangle className="warning-icon" />
-            <p>El formato del correo no es el correcto</p>
-            <button onClick={() => setEmailError(false)}>Cerrar</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default Register;
+export default Register;

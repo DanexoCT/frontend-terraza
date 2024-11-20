@@ -1,0 +1,108 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra la card en la página */
+    padding: 20px;
+    margin-top: 20px; /* Añadimos un margen para que no se pegue al top */
+}
+
+.profile-title {
+    font-size: 28px;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+}
+
+.profile-card {
+    width: 90%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto; /* Centra la card */
+}
+
+.profile-image-container {
+    text-align: center; /* Centra la imagen */
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #6c63ff;
+}
+
+.cancel-button {
+    color: #ff5252;
+}
+
+/* Alineación de la información en la tarjeta */
+.profile-info {
+    line-height: 1.8;
+}
+
+.profile-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.field-edit-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea todo el contenido a la izquierda */
+}
+
+.profile-info .form-group {
+    margin-bottom: 15px;
+    width: 100%; /* Asegura que el input ocupe todo el ancho */
+}
+
+.profile-info .form-group label {
+    font-weight: bold; /* Negrita */
+    color: #555;
+    margin-bottom: 5px; /* Espacio entre el label y el input */
+    display: block; /* Para asegurarte de que siempre esté arriba del input */
+}
+
+.profile-info .form-group input {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.profile-info .form-group button {
+    margin-top: 10px;
+}

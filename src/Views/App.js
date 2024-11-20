@@ -11,6 +11,7 @@ import Footer from './Footer';
 import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
+import Coupons from './Coupons';
 import { AuthProvider } from './AuthContext';
 
 function Main() {
@@ -70,7 +71,7 @@ function Main() {
   return (
     <div className="app">
       {/* Mostrar el título y la barra de navegación de productos solo si no estás en /login, /register o /profile */}
-      {!['/login', '/register', '/profile'].includes(location.pathname) && (
+      {!['/login', '/register', '/profile','/coupons'].includes(location.pathname) && (
         <>
           <br/><br/><br/>
           <h4 className="menu-title">Nuestro Menú</h4>
@@ -110,6 +111,7 @@ function Main() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Coupons" element={<Coupons />} />
       </Routes><br/><br/>
 
       {selectedProduct && (

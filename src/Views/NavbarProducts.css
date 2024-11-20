@@ -3,6 +3,7 @@
     padding: 10px 20px;
     display: flex;
     justify-content: center;
+    
 }
 
 .navbar-list {
@@ -30,6 +31,7 @@
 .navbar-list li:hover,
 .navbar-list li.active {
     color: #c7a385;
+    transform: translateY(-2px); /* Levanta ligeramente el botón */
 }
 
 .navbar-list li.active {

@@ -1,0 +1,86 @@
+/* Contenedor principal */
+.coupons-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Título */
+.coupons-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Grid de cupones */
+.coupons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Estilo de cada tarjeta de cupón */
+.coupon-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+    cursor: pointer;
+}
+
+/* Efecto de hover: aumentar el tamaño y cambiar la sombra */
+.coupon-card:hover {
+    transform: scale(1.05); /* Aumenta el tamaño */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Sombra más profunda */
+    border: 1px solid #af995b; /* Borde de color azul al pasar el cursor */
+}
+
+/* Estilos para los títulos y texto */
+.coupon-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #444;
+    font-weight: 600;
+}
+
+.coupon-card p {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #666;
+}
+
+.coupon-card strong {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Estilo de botones (si se reactivara la funcionalidad de canje) */
+.redeem-button {
+    background-color: #af995b;
+    color: white;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 15px;
+}
+
+.redeem-button:hover {
+    background-color: #947c3b;
+    transform: scale(1.05); /* Efecto de aumento del botón */
+}
+
+/* Opcional: Sombra sutil en el contenedor de los cupones */
+.coupons-grid {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}

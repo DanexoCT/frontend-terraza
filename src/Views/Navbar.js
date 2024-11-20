@@ -5,9 +5,10 @@ import { useAuth } from './AuthContext'; // Usa el hook useAuth
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [puntos, setPuntos] = useState(0); // Estado para los puntos acumulados
   const menuRef = useRef(null);
   const iconRef = useRef(null);
-  const { isAuthenticated, logout } = useAuth(); // Accede al contexto
+  const { isAuthenticated, logout, getUserPoints } = useAuth(); // Accede al contexto
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -27,14 +28,22 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  // Cierra el menú cuando se hace clic en un enlace de navegación
+  // Obtiene los puntos acumulados cuando el usuario está autenticado
+  useEffect(() => {
+    if (isAuthenticated && getUserPoints) {
+      getUserPoints()
+        .then((points) => setPuntos(points))
+        .catch((error) => console.error('Error obteniendo los puntos:', error));
+    }
+  }, [isAuthenticated, getUserPoints]);
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -51,11 +60,15 @@ const Navbar = () => {
       <div ref={menuRef} className={`nav-links ${isOpen ? 'open' : ''}`}>
         {isAuthenticated ? (
           <>
+            <span className="nav-points">Puntos: {puntos}</span>
+            <Link to="/coupons" className="nav-link" onClick={() => setIsOpen(false)}>Cupones</Link>
+            <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>Menú</Link>
             <Link to="/profile" className="nav-link" onClick={() => setIsOpen(false)}>Perfil</Link>
             <button onClick={handleLogout} className="nav-link logout-button">Cerrar sesión</button>
           </>
         ) : (
           <>
+            <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>Menú</Link>
             <Link to="/login" className="nav-link" onClick={() => setIsOpen(false)}>Iniciar sesión</Link>
             <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>Registrarse</Link>
           </>
