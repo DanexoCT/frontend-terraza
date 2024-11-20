@@ -1,108 +1,187 @@
+/* General styles */
 body {
     font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
     margin: 0;
     padding: 0;
-    background: #f9f9f9;
+    min-height: 100vh;
+    display: block;
+    /* Cambiar a block para evitar que todo se centre */
 }
 
+/* Container */
 .profile-container {
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra la card en la página */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
     padding: 20px;
-    margin-top: 20px; /* Añadimos un margen para que no se pegue al top */
-}
-
-.profile-title {
-    font-size: 28px;
-    color: #4a4a4a;
-    margin-bottom: 20px;
 }
 
 .profile-card {
-    width: 90%;
-    max-width: 600px;
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto; /* Centra la card */
 }
 
-.profile-image-container {
-    text-align: center; /* Centra la imagen */
+/* Header */
+.profile-header {
+    position: relative;
     margin-bottom: 20px;
 }
 
 .profile-image {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #ddd;
+    border: 4px solid #af995b;
+    background-color: #ececec;
 }
 
-.edit-button,
-.save-button,
-.cancel-button {
-    margin-left: 10px;
-    cursor: pointer;
+/* Estilo general para form-group */
+.form-group {
+    display: flex;
+    position: center;
+    margin-bottom: 20px;
+    /* Para que el botón se posicione dentro del grupo */
+}
+
+/* Botón de editar */
+.edit-button {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+    background: #af995b;
+    color: white;
     border: none;
-    background: none;
-    font-size: 18px;
-    color: #6c63ff;
-}
-
-.cancel-button {
-    color: #ff5252;
-}
-
-/* Alineación de la información en la tarjeta */
-.profile-info {
-    line-height: 1.8;
-}
-
-.profile-field {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #947c3b;
+    transform: translateY(-50%) scale(1.1); /* Hace el botón un 20% más grande */
+}
+
+/* Body */
+.profile-body {
+    margin-top: 30px;
+    text-align: left;
+}
+
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #947c3b;
     margin-bottom: 10px;
+    margin-left: 25px;
+    margin-right: 8px;
 }
 
-.field-edit-container {
-    display: flex;
-    align-items: center;
+span {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #000000;
 }
 
-.profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Alinea todo el contenido a la izquierda */
-}
-
-.profile-info .form-group {
-    margin-bottom: 15px;
-    width: 100%; /* Asegura que el input ocupe todo el ancho */
-}
-
-.profile-info .form-group label {
-    font-weight: bold; /* Negrita */
-    color: #555;
-    margin-bottom: 5px; /* Espacio entre el label y el input */
-    display: block; /* Para asegurarte de que siempre esté arriba del input */
-}
-
-.profile-info .form-group input {
-    width: 100%; /* Ocupa todo el ancho disponible */
+.form-input {
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 90%;
+    margin-top: 8px;
+    margin-bottom: 15px;
 }
 
-.profile-info .form-group button {
+.form-input:focus {
+    border-color: #999999; /* Cambia este color a lo que prefieras */
+    outline: none; /* Opcional, para quitar el borde de enfoque predeterminado */
+}
+
+.save-button {
+    background: #999999;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 2.5px 12px;
     margin-top: 10px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-button:hover {
+    background: #757575;
+    transform: translateY(-2px); /* Levanta ligeramente el botón */
+}
+
+/* Error and Loading */
+.error-message {
+    color: #d32f2f;
+    background: #f8d7da;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.loading-message {
+    color: #757575;
+    font-size: 16px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.input-icon {
+    position: absolute;
+    left: -3px;
+    top: 28%;
+    transform: translateY(-50%);
+    font-size: 18px; /* Ajusta el tamaño del icono */
+    color: #757575; /* Cambia el color a lo que prefieras */
+  }
+  
+  .form-group {
+    position: relative;
+    margin-bottom: 20px; /* Añadir espacio entre los campos */
+  }
+  
+
+/* Responsive */
+@media (max-width: 600px) {
+    .profile-card {
+        padding: 15px;
+    }
+
+    .form-input {
+        font-size: 12px;
+    }
+
+    .save-button,
+    .edit-button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
 }

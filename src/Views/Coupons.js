@@ -1,48 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import './Coupons.css';
+import { fetchUserProfile } from './Services'; // Importar la función para obtener el perfil
 
 const CouponsView = () => {
-    // Estado para almacenar los cupones y el estado de carga
+    // Estado para almacenar los cupones, el estado de carga y el cliente_id
     const [coupons, setCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [clienteId, setClienteId] = useState(null); // Nuevo estado para almacenar el cliente_id
 
-    // UseEffect para cargar los cupones desde el servidor cuando el componente se monta
+    // UseEffect para cargar los cupones y obtener el perfil del usuario cuando el componente se monta
     useEffect(() => {
-        const fetchCoupons = async () => {
+        const fetchCouponsAndProfile = async () => {
             try {
-                // Realiza la solicitud GET para obtener los cupones
-                const response = await fetch('http://localhost:5000/api/coupons');
-                const data = await response.json();
-                console.log('Datos recibidos:', data); // Depuración: muestra los cupones recibidos
-                setCoupons(data); // Almacena los cupones en el estado
+                // Obtener cupones
+                const couponsResponse = await fetch('http://localhost:5000/api/coupons');
+                const couponsData = await couponsResponse.json();
+                setCoupons(couponsData); // Almacenar los cupones en el estado
+
+                // Obtener el perfil del usuario
+                const userProfile = await fetchUserProfile();
+                setClienteId(userProfile.id); // Asignar el cliente_id al estado
+                console.log(userProfile)
             } catch (error) {
-                console.error('Error al cargar los cupones:', error); // Captura y muestra errores de la solicitud
+                console.error('Error al cargar los cupones o el perfil:', error);
             } finally {
-                setLoading(false); // Actualiza el estado para indicar que la carga ha terminado
+                setLoading(false); // Actualizar el estado de carga
             }
         };
-    
-        fetchCoupons(); // Llama a la función para obtener los cupones
+
+        fetchCouponsAndProfile(); // Llamar a la función para obtener los cupones y el perfil
     }, []);
 
     // Función para manejar el canjeo de cupones
     const handleRedeem = async (cuponId) => {
-        // Obtiene el identificador del usuario desde el almacenamiento local
-        const userIdentifier = localStorage.getItem('userIdentifier'); 
-        if (!userIdentifier) {
-            alert('Usuario no autenticado'); // Si el usuario no está autenticado, muestra un alerta
+        if (!clienteId) {
+            alert('Usuario no autenticado o datos de perfil no cargados'); // Verificar si el clienteId está disponible
             return;
         }
-    
+
         try {
             // Realiza la solicitud POST para canjear el cupón
-            const response = await fetch(`http://localhost:5000/coupons/canjear/${userIdentifier}/${cuponId}`, {
+            const response = await fetch(`http://localhost:5000/api/coupons/canjear/${clienteId}/${cuponId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Especifica que la solicitud es en formato JSON
                 },
             });
-    
+
             // Si la respuesta es exitosa, actualiza el estado de los cupones y muestra una alerta
             if (response.ok) {
                 alert('Cupón canjeado exitosamente');
@@ -55,8 +59,8 @@ const CouponsView = () => {
                 alert(`Error al canjear el cupón: ${errorData.message}`);
             }
         } catch (error) {
-            console.error('Error en la solicitud:', error); // Captura cualquier error de la solicitud
-            alert('Hubo un problema al intentar canjear el cupón'); // Muestra una alerta de error
+            console.error('Error en la solicitud:', error);
+            alert('Hubo un problema al intentar canjear el cupón');
         }
     };
 

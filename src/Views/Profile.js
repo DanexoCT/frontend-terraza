@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import { FaEdit, FaSave, FaUserCircle } from 'react-icons/fa';
+import { FaEdit, FaSave, FaUser, FaEnvelope, FaIdCard, FaAward } from 'react-icons/fa';
 import './Profile.css';
 
 const Profile = () => {
@@ -13,6 +12,7 @@ const Profile = () => {
     imagen: false,
   });
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [updatedData, setUpdatedData] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -38,11 +38,13 @@ const Profile = () => {
   const handleInputChange = (field, value) => {
     setUpdatedData((prev) => ({ ...prev, [field]: value }));
   };
-  
-  axios.defaults.withCredentials = true;
+
+  axios.defaults.withCredentials = true;
 
   const handleSave = async (field) => {
     setLoading(true);
+    setError('');
+    setSuccessMessage('');
     try {
       const updatedField = { [field]: updatedData[field] || profileData[field] };
       await axios.put('http://localhost:5000/api/customers/profile', updatedField, {
@@ -50,6 +52,7 @@ const Profile = () => {
       });
       setProfileData((prev) => ({ ...prev, ...updatedField }));
       setIsEditing((prev) => ({ ...prev, [field]: false }));
+      setSuccessMessage('Cambios guardados exitosamente.');
     } catch (error) {
       console.error('Error al actualizar el perfil', error);
       setError('No se pudo guardar el cambio. Intenta de nuevo.');
@@ -57,10 +60,6 @@ const Profile = () => {
       setLoading(false);
     }
   };
-
-  if (error) {
-    return <div className="error-message">{error}</div>;
-  }
 
   if (!profileData) {
     return <div className="loading-message">Cargando perfil...</div>;
@@ -91,7 +90,7 @@ const Profile = () => {
                 className="profile-image"
               />
               <button className="edit-button" onClick={() => handleEditToggle('imagen')}>
-                <FaEdit /> Editar
+                <FaEdit />
               </button>
             </>
           )}
@@ -99,8 +98,9 @@ const Profile = () => {
 
         {/* Información del perfil */}
         <div className="profile-body">
-          <div className="form-group">
-            <label>Nombre(s):</label>
+          <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+            <FaUser className="input-icon" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <label>Nombre(s): </label>
             {isEditing.nombre ? (
               <>
                 <input
@@ -122,8 +122,10 @@ const Profile = () => {
               </>
             )}
           </div>
-          <div className="form-group">
-            <label>Apellido Paterno:</label>
+
+          <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+            <FaUser className="input-icon" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <label>Apellido Paterno: </label>
             {isEditing.apellidoP ? (
               <>
                 <input
@@ -145,8 +147,10 @@ const Profile = () => {
               </>
             )}
           </div>
-          <div className="form-group">
-            <label>Apellido Materno:</label>
+
+          <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+            <FaUser className="input-icon" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <label>Apellido Materno: </label>
             {isEditing.apellidoM ? (
               <>
                 <input
@@ -168,17 +172,30 @@ const Profile = () => {
               </>
             )}
           </div>
+
+
           <div className="form-group">
-            <label>Correo:</label>
+            <label>Correo: </label>
+            <FaEnvelope className="input-icon" /> {/* Icono antes del campo */}
             <span>{profileData.correo}</span>
           </div>
+
           <div className="form-group">
-            <label>Identificador:</label>
+            <label>Identificador: </label>
+            <FaIdCard className="input-icon" /> {/* Icono antes del campo */}
             <span>{profileData.identificador}</span>
           </div>
+
           <div className="form-group">
-            <label>Puntos:</label>
+            <label>Puntos: </label>
+            <FaAward className="input-icon" /> {/* Icono antes del campo */}
             <span>{profileData.puntos}</span>
+          </div>
+
+          {/* Mensajes dinámicos */}
+          <div className="message-container">
+            {error && <div className="error-message">{error}</div>}
+            {successMessage && <div className="success-message">{successMessage}</div>}
           </div>
         </div>
       </div>
