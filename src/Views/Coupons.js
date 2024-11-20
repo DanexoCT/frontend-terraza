@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Coupons.css';
+import { useNavigate } from 'react-router-dom'; // Para redirigir a login
 import { fetchUserProfile } from './Services'; // Importar la función para obtener el perfil
 
 const CouponsView = () => {
@@ -7,13 +8,23 @@ const CouponsView = () => {
     const [coupons, setCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [clienteId, setClienteId] = useState(null); // Nuevo estado para almacenar el cliente_id
+    const navigate = useNavigate(); // Hook para redirigir a login si no está autenticado
+
 
     // UseEffect para cargar los cupones y obtener el perfil del usuario cuando el componente se monta
     useEffect(() => {
         const fetchCouponsAndProfile = async () => {
             try {
                 // Obtener cupones
-                const couponsResponse = await fetch('http://localhost:5000/api/coupons');
+                const couponsResponse = await fetch('http://localhost:5000/api/coupons', {
+                    method: 'GET',
+                    credentials: 'include' 
+                });
+
+                if(couponsResponse.status === 401){
+                    navigate('/login'); // Redirige al login si el token es inválido o no existe
+                    return; 
+                }
                 const couponsData = await couponsResponse.json();
                 setCoupons(couponsData); // Almacenar los cupones en el estado
 
@@ -29,7 +40,7 @@ const CouponsView = () => {
         };
 
         fetchCouponsAndProfile(); // Llamar a la función para obtener los cupones y el perfil
-    }, []);
+    }, [navigate]);
 
     // Función para manejar el canjeo de cupones
     const handleRedeem = async (cuponId) => {
@@ -93,4 +104,4 @@ const CouponsView = () => {
     );
 };
 
-export default CouponsView;
+export default CouponsView;

@@ -45,21 +45,30 @@ const Profile = () => {
     setLoading(true);
     setError('');
     setSuccessMessage('');
+
     try {
-      const updatedField = { [field]: updatedData[field] || profileData[field] };
-      await axios.put('http://localhost:5000/api/customers/profile', updatedField, {
-        withCredentials: true,
-      });
-      setProfileData((prev) => ({ ...prev, ...updatedField }));
-      setIsEditing((prev) => ({ ...prev, [field]: false }));
-      setSuccessMessage('Cambios guardados exitosamente.');
+        const updatedField = { [field]: updatedData[field] || profileData[field] };
+
+        // Enviar solicitud PUT con el ID del cliente en la URL
+        const response = await axios.put(
+            `http://localhost:5000/api/customers/update-customer/${profileData.id}`,
+            updatedField,
+            {
+                withCredentials: true,
+            }
+        );
+
+        // Actualizar los datos del perfil localmente
+        setProfileData((prev) => ({ ...prev, ...updatedField }));
+        setIsEditing((prev) => ({ ...prev, [field]: false }));
+        setSuccessMessage(response.data.message || 'Cambios guardados exitosamente.');
     } catch (error) {
-      console.error('Error al actualizar el perfil', error);
-      setError('No se pudo guardar el cambio. Intenta de nuevo.');
+        console.error('Error al actualizar el perfil', error);
+        setError(error.response?.data?.message || 'No se pudo guardar el cambio. Intenta de nuevo.');
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   if (!profileData) {
     return <div className="loading-message">Cargando perfil...</div>;
@@ -89,7 +98,7 @@ const Profile = () => {
                 alt="Imagen de perfil"
                 className="profile-image"
               />
-              <button className="edit-button" onClick={() => handleEditToggle('imagen')}>
+              <button className="edit-button-image" onClick={() => handleEditToggle('imagen')}>
                 <FaEdit />
               </button>
             </>
@@ -99,7 +108,7 @@ const Profile = () => {
         {/* Información del perfil */}
         <div className="profile-body">
           <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-            <FaUser className="input-icon" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
             <label>Nombre(s): </label>
             {isEditing.nombre ? (
               <>
@@ -124,7 +133,7 @@ const Profile = () => {
           </div>
 
           <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-            <FaUser className="input-icon" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
             <label>Apellido Paterno: </label>
             {isEditing.apellidoP ? (
               <>
@@ -149,7 +158,7 @@ const Profile = () => {
           </div>
 
           <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-            <FaUser className="input-icon" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
             <label>Apellido Materno: </label>
             {isEditing.apellidoM ? (
               <>
@@ -176,19 +185,19 @@ const Profile = () => {
 
           <div className="form-group">
             <label>Correo: </label>
-            <FaEnvelope className="input-icon" /> {/* Icono antes del campo */}
+            <FaEnvelope className="input-icon-profile" /> {/* Icono antes del campo */}
             <span>{profileData.correo}</span>
           </div>
 
           <div className="form-group">
             <label>Identificador: </label>
-            <FaIdCard className="input-icon" /> {/* Icono antes del campo */}
+            <FaIdCard className="input-icon-profile" /> {/* Icono antes del campo */}
             <span>{profileData.identificador}</span>
           </div>
 
           <div className="form-group">
             <label>Puntos: </label>
-            <FaAward className="input-icon" /> {/* Icono antes del campo */}
+            <FaAward className="input-icon-profile" /> {/* Icono antes del campo */}
             <span>{profileData.puntos}</span>
           </div>
 

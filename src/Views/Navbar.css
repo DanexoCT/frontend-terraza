@@ -188,7 +188,7 @@
     }
   }
 
-  @media (min-width: 655px) and (max-width: 764px) {
+  @media (min-width: 655px) and (max-width: 780px) {
     .nav-links {
       display: none;
       position: absolute;

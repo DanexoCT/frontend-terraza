@@ -18,17 +18,23 @@ body {
     max-width: 500px;
     margin: auto;
     padding: 20px;
+
 }
 
 .profile-card {
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
     overflow: hidden;
     width: 100%;
     max-width: 600px;
     text-align: center;
     padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.profile-card:hover{
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
@@ -57,7 +63,7 @@ body {
 /* Botón de editar */
 .edit-button {
     position: absolute;
-    top: 50%;
+    top: 35%;
     right: 0px;
     transform: translateY(-50%);
     background: #af995b;
@@ -74,7 +80,29 @@ body {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.edit-button-image {
+    top: 85%;
+    right: 125px;
+    transform: translateY(-50%);
+    background: #af995b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 .edit-button:hover {
+    background-color: #947c3b;
+    transform: translateY(-50%) scale(1.1); /* Hace el botón un 20% más grande */
+}
+
+.edit-button-image:hover {
     background-color: #947c3b;
     transform: translateY(-50%) scale(1.1); /* Hace el botón un 20% más grande */
 }
@@ -122,7 +150,7 @@ span {
     border: none;
     border-radius: 8px;
     padding: 2.5px 12px;
-    margin-top: 10px;
+    margin-top: 8px;
     margin-bottom: 15px;
     margin-left: 20px;
     font-size: 14px;
@@ -138,12 +166,22 @@ span {
 
 /* Error and Loading */
 .error-message {
-    color: #d32f2f;
-    background: #f8d7da;
+    background-color: #ff000096; /* Rojo  */
+    color: #771b23; /* Texto rojo oscuro */
+    border: 1px solid #ff000096;
     padding: 10px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 14px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #d4edda; /* Verde  */
+    color: #155724; /* Texto verde oscuro */
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
     text-align: center;
 }
 
@@ -154,10 +192,20 @@ span {
     margin: 20px 0;
 }
 
-.input-icon {
+.input-icon-profile {
     position: absolute;
     left: -3px;
     top: 28%;
+    transform: translateY(-50%);
+    font-size: 18px; /* Ajusta el tamaño del icono */
+    color: #757575; /* Cambia el color a lo que prefieras */
+  }
+
+  
+.input-icon-profile-pj {
+    position: absolute;
+    left: -3px;
+    top: 35%;
     transform: translateY(-50%);
     font-size: 18px; /* Ajusta el tamaño del icono */
     color: #757575; /* Cambia el color a lo que prefieras */
@@ -170,18 +218,81 @@ span {
   
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 540px) {
+
+    .profile-container {
+        width: 80%;
+        max-width: 500px;
+    }
+
     .profile-card {
-        padding: 15px;
+        padding: 10px;
     }
 
     .form-input {
         font-size: 12px;
     }
 
-    .save-button,
     .edit-button {
+        font-size: 25px;
+        padding: 6px 9px;
+        width: 30px;
+        height: 30px;
+        top: 30%;
+    }
+
+    .save-button {
+        border-radius: 6px;
+        padding: 2.8px 8px;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        margin-left: 8px;
+        font-size: 11px;
+    }
+
+    .form-input {
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 13px;
+        width: 90%;
+        margin-top: 8px;
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 13px;
+        margin-bottom: 10px;
+        margin-left: 25px;
+        margin-right: 8px;
+    }
+
+    .profile-image {
+        width: 125px;
+        height: 125px;
+    }
+
+    span {
+        font-size: 13px;
+    }
+
+    .input-icon-profile {
+        left: 3px;
+        font-size: 15px; /* Ajusta el tamaño del icono */
+      }
+    
+      
+    .input-icon-profile-pj {
+        left: 3px;
+        top: 36%;
+        font-size: 15px; /* Ajusta el tamaño del icono */
+      }
+
+      .edit-button-image {
+        top: 85%;
+        right: 105px;
         font-size: 12px;
-        padding: 6px 12px;
+        padding: 6px 9px;
+        width: 30px;
+        height: 30px;
     }
 }
