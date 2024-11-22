@@ -41,7 +41,7 @@
 .coupon-card:hover {
     transform: scale(1.05); /* Aumenta el tamaño */
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Sombra más profunda */
-    border: 1px solid #af995b; /* Borde de color azul al pasar el cursor */
+    border: 3px solid #af995b; /* Borde de color azul al pasar el cursor */
 }
 
 /* Estilos para los títulos y texto */

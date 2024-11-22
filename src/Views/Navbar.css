@@ -16,7 +16,29 @@
     display: flex;
   }
   
-  .nav-link {
+.nav-link {
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+  padding: 15px;
+  margin: 10px;
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+  text-align: center;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px); /* Levanta ligeramente el botón */
+}
+
+.nav-link.active {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra visible */
+  border-bottom: 2px solid #af995b; /* Subrayado distintivo */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+
+  .nav-link-yourCoupons {
     text-decoration: none;
     color: #000000;
     font-weight: bold;
@@ -26,16 +48,32 @@
     transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
     text-align: center;
   }
-  
-  .nav-link:hover {
+
+  .nav-link-yourCoupons:hover {
     transform: translateY(-2px); /* Levanta ligeramente el botón */
+  }
+  
+  .coupon-count {
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -8px; /* Ajusta según tu diseño */
+    right: -12px; /* Ajusta según tu diseño */
+    font-weight: bold;
   }
   
   .nav-points {
     font-weight: bold;
     color: #af995b;
-    margin-right: 15px;
-    padding: 15px; /* Ajusta hacia abajo */
+    padding: 15px;
+    margin: 10px;
     display: inline-block;
     font-size: 16px;
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
@@ -188,7 +226,7 @@
     }
   }
 
-  @media (min-width: 655px) and (max-width: 780px) {
+  @media (min-width: 655px) and (max-width: 945px) {
     .nav-links {
       display: none;
       position: absolute;

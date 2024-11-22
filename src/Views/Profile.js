@@ -47,28 +47,50 @@ const Profile = () => {
     setSuccessMessage('');
 
     try {
-        const updatedField = { [field]: updatedData[field] || profileData[field] };
+      let updatedField;
+      let config = { withCredentials: true };
 
-        // Enviar solicitud PUT con el ID del cliente en la URL
-        const response = await axios.put(
-            `http://localhost:5000/api/customers/update-customer/${profileData.id}`,
-            updatedField,
-            {
-                withCredentials: true,
-            }
-        );
+      if (field === 'imagen' && updatedData.imagen) {
+        // Si es una imagen, usar FormData
+        const formData = new FormData();
+        formData.append('imagen', updatedData.imagen);
 
-        // Actualizar los datos del perfil localmente
-        setProfileData((prev) => ({ ...prev, ...updatedField }));
-        setIsEditing((prev) => ({ ...prev, [field]: false }));
-        setSuccessMessage(response.data.message || 'Cambios guardados exitosamente.');
+        updatedField = formData;
+        config.headers = {
+          'Content-Type': 'multipart/form-data',
+        };
+      } else {
+        // Si no es una imagen, usar datos JSON normales
+        updatedField = { [field]: updatedData[field] || profileData[field] };
+      }
+
+      // Enviar solicitud PUT con el ID del cliente en la URL
+      const response = await axios.put(`
+        http://localhost:5000/api/customers/update-customer/${profileData.id}`,
+        updatedField,
+        config
+      );
+
+      // Actualizar los datos del perfil localmente
+      setProfileData((prev) => ({ ...prev, ...updatedField }));
+      setIsEditing((prev) => ({ ...prev, [field]: false }));
+      setSuccessMessage(response.data.message || 'Cambios guardados exitosamente.');
+      // Recargar la ventana después de guardar
+      if (field === 'imagen') {
+        window.location.reload();
+      }
     } catch (error) {
-        console.error('Error al actualizar el perfil', error);
-        setError(error.response?.data?.message || 'No se pudo guardar el cambio. Intenta de nuevo.');
+      console.error('Error al actualizar el perfil', error);
+      setError(error.response?.data?.message || 'No se pudo guardar el cambio. Intenta de nuevo.');
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
+  const imagen = (profileData && profileData.imagen)
+    ? profileData.imagen
+    : 'https://via.placeholder.com/150';
+
+
 
   if (!profileData) {
     return <div className="loading-message">Cargando perfil...</div>;
@@ -94,7 +116,7 @@ const Profile = () => {
           ) : (
             <>
               <img
-                src={profileData.imagen || 'https://via.placeholder.com/150'}
+                src={imagen}
                 alt="Imagen de perfil"
                 className="profile-image"
               />

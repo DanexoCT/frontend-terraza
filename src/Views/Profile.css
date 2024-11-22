@@ -140,7 +140,7 @@ span {
 }
 
 .form-input:focus {
-    border-color: #999999; /* Cambia este color a lo que prefieras */
+    border-color: #af995b; /* Cambia este color a lo que prefieras */
     outline: none; /* Opcional, para quitar el borde de enfoque predeterminado */
 }
 

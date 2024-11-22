@@ -10,7 +10,9 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const iconRef = useRef(null);
   const { isAuthenticated, logout, getUserPoints } = useAuth(); // Accede al contexto
+  const [activeSection, setActiveSection] = useState('');
   const navigate = useNavigate();
+
 
   const toggleMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -68,9 +70,37 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <span className="nav-points">Puntos: {puntos}</span>
-            <Link to="/coupons" className="nav-link" onClick={() => setIsOpen(false)}>Cupones</Link>
-            <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>Menú</Link>
-            <Link to="/profile" className="nav-link" onClick={() => setIsOpen(false)}>Perfil</Link>
+            <Link
+              to="/coupons"
+              className={`nav-link ${activeSection === 'coupons' ? 'active' : ''}`}
+              onClick={() => setActiveSection('coupons')}
+            >
+              Cupones
+            </Link>
+
+            <Link
+              to="/yourCoupons"
+              className={`nav-link ${activeSection === 'yourCoupons' ? 'active' : ''}`}
+              onClick={() => setActiveSection('yourCoupons')}
+            >
+              Tus Cupones
+            </Link>
+
+            <Link
+              to="/"
+              className={`nav-link ${activeSection === 'menu' ? 'active' : ''}`}
+              onClick={() => setActiveSection('menu')}
+            >
+              Menú
+            </Link>
+
+            <Link
+              to="/profile"
+              className={`nav-link ${activeSection === 'profile' ? 'active' : ''}`}
+              onClick={() => setActiveSection('profile')}
+            >
+              Perfil
+            </Link>
             <button onClick={handleLogout} className="nav-link logout-button">Cerrar sesión</button>
           </>
         ) : (

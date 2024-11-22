@@ -17,10 +17,11 @@
 .navbar-list li {
     font-size: 18px;
     font-weight: bold;
-    cursor: pointer;
     color: #6b5d52;
-    transition: color 0.3s, box-shadow 0.3s;
     padding: 10px; 
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    text-align: center;
 }
 
 .navbar-list li a {
@@ -28,12 +29,13 @@
     color: inherit; 
 }
 
-.navbar-list li:hover,
-.navbar-list li.active {
-    color: #c7a385;
+.navbar-list li:hover{
     transform: translateY(-2px); /* Levanta ligeramente el botón */
 }
 
 .navbar-list li.active {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #af995b;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra visible */
+    border-bottom: 2px solid #af995b; /* Subrayado distintivo */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
 }
