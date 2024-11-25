@@ -24,8 +24,13 @@ const YourCoupons = () => {
   }, []);
 
   useEffect(() => {
+    if (!profileData) {
+      return;
+    }
+
     if (!profileData?.id) {
       console.warn("El perfil aún no contiene un ID válido:", profileData);
+      window.location.href = "/login";
       return;
     }
 
@@ -39,7 +44,7 @@ const YourCoupons = () => {
         setCoupons(response.data.cupones || []);
       } catch (err) {
         console.error("Error al obtener cupones:", err);
-        setError("Error al cargar los cupones. Intenta de nuevo más tarde.");
+        setError("No tienes cupones todavía, ahorra puntos en tus compras para obtener cupones.");
       } finally {
         setLoading(false);
       }
@@ -53,14 +58,14 @@ const YourCoupons = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p><div className="error-message">{error}</div></p>;
   }
 
   return (
     <div className="coupons-container">
       <h1>Tus Cupones</h1>
       {coupons.length === 0 ? (
-        <p>No tienes cupones activos.</p>
+        <p>No tienes cupones todavía, ahorra puntos en tus compras para obtener cupones.</p>
       ) : (
         <div className="coupons-grid">
           {coupons.map((coupon) => (

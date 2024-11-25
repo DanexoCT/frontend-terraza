@@ -85,3 +85,14 @@
 .coupons-grid {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
+
+/* Error and Loading */
+.error-message {
+    background-color: #ff000096; /* Rojo  */
+    color: #771b23; /* Texto rojo oscuro */
+    border: 1px solid #ff000096;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+}

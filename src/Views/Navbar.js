@@ -105,9 +105,27 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>Menú</Link>
-            <Link to="/login" className="nav-link" onClick={() => setIsOpen(false)}>Iniciar sesión</Link>
-            <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>Registrarse</Link>
+            <Link
+              to="/"
+              className={`nav-link ${activeSection === 'menu' ? 'active' : ''}`}
+              onClick={() => setActiveSection('menu')}
+            >
+              Menú
+            </Link>
+
+            <Link 
+              to="/login" 
+              className={`nav-link ${activeSection === 'login' ? 'active' : ''}`}
+              onClick={() => setActiveSection('login')}>
+                Iniciar sesión
+            </Link>
+
+            <Link 
+              to="/register" 
+              className={`nav-link ${activeSection === 'register' ? 'active' : ''}`}
+              onClick={() => setActiveSection('register')}>
+                Registrarse
+            </Link>
           </>
         )}
       </div>
