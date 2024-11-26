@@ -104,4 +104,4 @@ const CouponsView = () => {
     );
 };
 
-export default CouponsView;
+export default CouponsView;

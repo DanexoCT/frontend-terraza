@@ -1,6 +1,6 @@
 /* Contenedor principal */
 .coupons-container {
-    width: 100%;
+    width: 70%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -31,7 +31,7 @@
     border-radius: 15px;
     padding: 20px;
     width: 100%;
-    max-width: 320px;
+    max-width: 32s0px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
     cursor: pointer;
