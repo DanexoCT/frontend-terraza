@@ -4,87 +4,82 @@ import { useNavigate } from 'react-router-dom'; // Para redirigir a login
 import { fetchUserProfile } from './Services'; // Importar la función para obtener el perfil
 
 const CouponsView = () => {
-    // Estado para almacenar los cupones, el estado de carga y el cliente_id
     const [coupons, setCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [clienteId, setClienteId] = useState(null); // Nuevo estado para almacenar el cliente_id
-    const navigate = useNavigate(); // Hook para redirigir a login si no está autenticado
+    const [clienteId, setClienteId] = useState(null);
+    const [toast, setToast] = useState(null); // Estado para gestionar las alertas
+    const navigate = useNavigate();
 
-
-    // UseEffect para cargar los cupones y obtener el perfil del usuario cuando el componente se monta
     useEffect(() => {
         const fetchCouponsAndProfile = async () => {
             try {
-                // Obtener cupones
                 const couponsResponse = await fetch('http://localhost:5000/api/coupons', {
                     method: 'GET',
-                    credentials: 'include' 
+                    credentials: 'include',
                 });
 
-                if(couponsResponse.status === 401){
-                    navigate('/login'); // Redirige al login si el token es inválido o no existe
-                    return; 
+                if (couponsResponse.status === 401) {
+                    navigate('/login');
+                    return;
                 }
                 const couponsData = await couponsResponse.json();
-                setCoupons(couponsData); // Almacenar los cupones en el estado
+                setCoupons(couponsData);
 
-                // Obtener el perfil del usuario
                 const userProfile = await fetchUserProfile();
-                setClienteId(userProfile.id); // Asignar el cliente_id al estado
-                console.log(userProfile)
+                setClienteId(userProfile.id);
             } catch (error) {
                 console.error('Error al cargar los cupones o el perfil:', error);
             } finally {
-                setLoading(false); // Actualizar el estado de carga
+                setLoading(false);
             }
         };
 
-        fetchCouponsAndProfile(); // Llamar a la función para obtener los cupones y el perfil
+        fetchCouponsAndProfile();
     }, [navigate]);
 
-    // Función para manejar el canjeo de cupones
     const handleRedeem = async (cuponId) => {
         if (!clienteId) {
-            alert('Usuario no autenticado o datos de perfil no cargados'); // Verificar si el clienteId está disponible
+            setToast({ message: 'Usuario no autenticado o datos de perfil no cargados', type: 'error' });
             return;
         }
 
         try {
-            // Realiza la solicitud POST para canjear el cupón
             const response = await fetch(`http://localhost:5000/api/coupons/canjear/${clienteId}/${cuponId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Especifica que la solicitud es en formato JSON
+                    'Content-Type': 'application/json',
                 },
             });
 
-            // Si la respuesta es exitosa, actualiza el estado de los cupones y muestra una alerta
             if (response.ok) {
-                alert('Cupón canjeado exitosamente');
-                setCoupons((prevCoupons) =>
-                    prevCoupons.filter((coupon) => coupon._id !== cuponId) // Filtra el cupón canjeado de la lista
-                );
+                setToast({ message: 'Cupón canjeado exitosamente', type: 'success' });
+                setTimeout(() => window.location.reload(), 1000); // Recargar página
             } else {
-                // Si la respuesta no es exitosa, maneja el error mostrado por el servidor
                 const errorData = await response.json();
-                alert(`Error al canjear el cupón: ${errorData.message}`);
+                setToast({ message: `Error al canjear el cupón: ${errorData.message}`, type: 'error' });
+                setTimeout(() => setToast(null), 4000);
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
-            alert('Hubo un problema al intentar canjear el cupón');
+            setToast({ message: 'Hubo un problema al intentar canjear el cupón', type: 'error' });
         }
     };
 
-    // Si los cupones aún están siendo cargados, muestra un mensaje de carga
     if (loading) {
         return <p>Cargando cupones...</p>;
     }
 
     return (
         <div className="coupons-container">
+            {/* Contenedor de la alerta */}
+            {toast && (
+                <div className={`toast ${toast.type}`}>
+                    {toast.message}
+                </div>
+            )}
+
             <h1>Nuestros Cupones</h1>
             <div className="coupons-grid">
-                {/* Mapea los cupones y crea una tarjeta para cada uno */}
                 {coupons.map((coupon) => (
                     <div className="coupon-card" key={coupon._id || coupon.id}>
                         <h2>{coupon.nombre}</h2>
@@ -93,7 +88,7 @@ const CouponsView = () => {
                         <p><strong>Costo en puntos:</strong> {coupon.costoPuntos}</p>
                         <button
                             className="redeem-button"
-                            onClick={() => handleRedeem(coupon._id)} // Llama a handleRedeem al hacer clic en el botón
+                            onClick={() => handleRedeem(coupon._id)}
                         >
                             Canjear
                         </button>

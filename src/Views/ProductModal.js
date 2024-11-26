@@ -21,7 +21,7 @@ const ProductModal = ({ isOpen, onRequestClose, product }) => {
           </div>
 
           <p className={`product-modal-description ${isMobile ? 'product-modal-description-mobile' : ''}`}> {product.descripcion}</p>
-          <p className="product-points">{product.valorPuntos}ptos.</p>
+          <p className="product-points">{product.valorPuntos} pts.</p>
     </Modal>
   );
 };
