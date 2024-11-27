@@ -22,6 +22,7 @@
   font-weight: bold;
   padding: 15px;
   margin: 10px;
+  border-radius: 5px;
   cursor: pointer; /* Cambia el cursor al pasar el mouse */
   transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transiciones suaves */
   text-align: center;
@@ -33,7 +34,7 @@
 
 .nav-link.active {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra visible */
-  border-bottom: 2px solid #af995b; /* Subrayado distintivo */
+  border-bottom: 3px solid #af995b; /* Subrayado distintivo */
   transform: scale(1.05); /* Aumenta ligeramente el tamaño */
 }
 
@@ -120,12 +121,13 @@
       padding: 5px 0;
       gap: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border: 2px solid #af995b;
+      border: 3px solid #af995b;
       border-radius: 10px;
       z-index: 1;
       transition: transform 0.3s ease-in-out;
       align-items: center;
     }
+
     .nav-links.open {
       display: flex;
       transform: translate(-40%, 0); /* Ajuste para mostrar en el centro */
@@ -143,6 +145,34 @@
       height: 3px;
       background-color: #af995b;
       border-radius: 2px;
+    }
+
+    .nav-link {
+      padding: 5%;
+      margin: 5%;
+      height: 20px; /* Ajusta según sea necesario */
+      width: 105px;
+      border-radius: 5px;
+    }
+    
+    .nav-link.active {
+      box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.2), /* Sombra en la parte superior */
+      0 4px 10px rgba(0, 0, 0, 0.2);  /* Sombra en la parte inferior */
+      border-bottom: 3px solid #af995b; /* Subrayado distintivo */
+      transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    }
+
+    .nav-points {
+      padding: 5%;
+      margin:  5%;
+    }
+
+    .logout-button {
+      font-size: 16px; /* Tamaño de fuente */
+      padding: 5px 5px; /* Espaciado interno */
+      border-radius: 5px; /* Bordes redondeados */
+      height: 40px; /* Ajusta según sea necesario */
+      width: 125px;
     }
   }
 
@@ -159,7 +189,7 @@
       padding: 5px 0;
       gap: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border: 2px solid #af995b;
+      border: 3px solid #af995b;
       border-radius: 10px;
       z-index: 1;
       transition: transform 0.3s ease-in-out;
@@ -183,6 +213,34 @@
       height: 3px;
       background-color: #af995b;
       border-radius: 2px;
+    }
+
+    .nav-link {
+      padding: 5%;
+      margin: 5%;
+      height: 20px; /* Ajusta según sea necesario */
+      width: 105px;
+      border-radius: 5px;
+    }
+    
+    .nav-link.active {
+      box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.2), /* Sombra en la parte superior */
+      0 4px 10px rgba(0, 0, 0, 0.2);  /* Sombra en la parte inferior */
+      border-bottom: 3px solid #af995b; /* Subrayado distintivo */
+      transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    }
+
+    .nav-points {
+      padding: 5%;
+      margin:  5%;
+    }
+
+    .logout-button {
+      font-size: 16px; /* Tamaño de fuente */
+      padding: 5px 5px; /* Espaciado interno */
+      border-radius: 5px; /* Bordes redondeados */
+      height: 40px; /* Ajusta según sea necesario */
+      width: 125px;
     }
   }
 
@@ -199,7 +257,7 @@
       padding: 5px 0;
       gap: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border: 2px solid #af995b;
+      border: 3px solid #af995b;
       border-radius: 10px;
       z-index: 1;
       transition: transform 0.3s ease-in-out;
@@ -223,6 +281,34 @@
       height: 3px;
       background-color: #af995b;
       border-radius: 2px;
+    }
+    
+    .nav-link {
+      padding: 5%;
+      margin: 5%;
+      height: 20px; /* Ajusta según sea necesario */
+      width: 105px;
+      border-radius: 5px;
+    }
+    
+    .nav-link.active {
+      box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.2), /* Sombra en la parte superior */
+      0 4px 10px rgba(0, 0, 0, 0.2);  /* Sombra en la parte inferior */
+      border-bottom: 3px solid #af995b; /* Subrayado distintivo */
+      transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    }
+
+    .nav-points {
+      padding: 5%;
+      margin:  5%;
+    }
+
+    .logout-button {
+      font-size: 16px; /* Tamaño de fuente */
+      padding: 5px 5px; /* Espaciado interno */
+      border-radius: 5px; /* Bordes redondeados */
+      height: 40px; /* Ajusta según sea necesario */
+      width: 125px;
     }
   }
 
@@ -239,7 +325,7 @@
       padding: 5px 0;
       gap: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border: 2px solid #af995b;
+      border: 3px solid #af995b;
       border-radius: 10px;
       z-index: 1;
       transition: transform 0.3s ease-in-out;
@@ -263,5 +349,33 @@
       height: 3px;
       background-color: #af995b;
       border-radius: 2px;
+    }
+    
+    .nav-link {
+      padding: 5%;
+      margin: 5%;
+      height: 20px; /* Ajusta según sea necesario */
+      width: 105px;
+      border-radius: 5px;
+    }
+    
+    .nav-link.active {
+      box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.2), /* Sombra en la parte superior */
+      0 4px 10px rgba(0, 0, 0, 0.2);  /* Sombra en la parte inferior */
+      border-bottom: 3px solid #af995b; /* Subrayado distintivo */
+      transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    }
+
+    .nav-points {
+      padding: 5%;
+      margin:  5%;
+    }
+
+    .logout-button {
+      font-size: 16px; /* Tamaño de fuente */
+      padding: 5px 5px; /* Espaciado interno */
+      border-radius: 5px; /* Bordes redondeados */
+      height: 40px; /* Ajusta según sea necesario */
+      width: 125px;
     }
   }
