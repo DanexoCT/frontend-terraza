@@ -78,7 +78,7 @@ const CouponsView = () => {
                 </div>
             )}
 
-            <h1>Nuestros Cupones</h1>
+            <h1 className="title-coupons">Nuestros Cupones</h1>
             <div className="coupons-grid">
                 {coupons.map((coupon) => (
                     <div className="coupon-card" key={coupon._id || coupon.id}>

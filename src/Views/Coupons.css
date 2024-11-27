@@ -8,9 +8,17 @@
 }
 
 /* Título */
-.coupons-container h1 {
+.title-coupons {
     font-family: 'Dancing Script', cursive;
     font-size: 4rem;
+    margin-bottom: 55px;
+    color: #000000;
+    font-weight: 700;
+}
+
+.title-yourcoupons {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.8rem;
     margin-bottom: 55px;
     color: #000000;
     font-weight: 700;
@@ -39,9 +47,12 @@
 
 /* Efecto de hover: aumentar el tamaño y cambiar la sombra */
 .coupon-card:hover {
-    transform: scale(1.05); /* Aumenta el tamaño */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Sombra más profunda */
-    border: 3px solid #af995b; /* Borde de color azul al pasar el cursor */
+    transform: scale(1.05);
+    /* Aumenta el tamaño */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    /* Sombra más profunda */
+    border: 3px solid #af995b;
+    /* Borde de color azul al pasar el cursor */
 }
 
 /* Estilos para los títulos y texto */
@@ -78,7 +89,8 @@
 
 .redeem-button:hover {
     background-color: #947c3b;
-    transform: scale(1.05); /* Efecto de aumento del botón */
+    transform: scale(1.05);
+    /* Efecto de aumento del botón */
 }
 
 /* Opcional: Sombra sutil en el contenedor de los cupones */
@@ -88,8 +100,10 @@
 
 /* Error and Loading */
 .error-message {
-    background-color: #ff000096; /* Rojo  */
-    color: #771b23; /* Texto rojo oscuro */
+    background-color: #ff000096;
+    /* Rojo  */
+    color: #771b23;
+    /* Texto rojo oscuro */
     border: 1px solid #ff000096;
     padding: 10px;
     margin-top: 10px;
@@ -113,11 +127,13 @@
 }
 
 .toast.success {
-    background-color: #4caf50; /* Verde para éxito */
+    background-color: #4caf50;
+    /* Verde para éxito */
 }
 
 .toast.error {
-    background-color: #f44336; /* Rojo para errores */
+    background-color: #f44336;
+    /* Rojo para errores */
 }
 
 @keyframes fade-in {
@@ -125,6 +141,7 @@
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -135,6 +152,7 @@
     from {
         opacity: 1;
     }
+
     to {
         opacity: 0;
     }

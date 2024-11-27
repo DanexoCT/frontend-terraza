@@ -63,7 +63,7 @@ const YourCoupons = () => {
 
   return (
     <div className="coupons-container">
-      <h1>Tus Cupones</h1>
+      <h1 className='title-yourcoupons'>Tus Cupones</h1>
       {coupons.length === 0 ? (
         <p>No tienes cupones todavía, ahorra puntos en tus compras para obtener cupones.</p>
       ) : (
