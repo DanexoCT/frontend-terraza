@@ -151,7 +151,7 @@
   font-size: 12px; /* Tamaño de fuente pequeño */
   transition: opacity 0.3s ease; /* Transición suave */
   align-items: center;
-  left: -17px; /* Alinear a la izquierda */
+  left: 7px; /* Alinear a la izquierda */
   gap: 8px;
   bottom: 5px; /* Colocarlo justo debajo del campo */
 }

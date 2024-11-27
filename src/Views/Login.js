@@ -88,14 +88,7 @@ const Login = () => {
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Cargando...' : 'Iniciar Sesión'}
           </button>
-          <button className="google-login">
-            <FaGoogle /> Iniciar Sesión con Google
-          </button>
         </form>
-
-        <div className="forgot-password">
-          <Link to="/forgot-password">¿Se te olvidó la contraseña?</Link>
-        </div>
 
         <div className="create-account">
           <p>¿Necesitas una cuenta? <Link to="/register">Crear cuenta</Link></p>
