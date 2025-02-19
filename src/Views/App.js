@@ -14,8 +14,11 @@ import Profile from './Profile';
 import Coupons from './Coupons';
 import YourCoupons from './YourCoupons';
 import { AuthProvider } from './AuthContext';
+import Modal from 'react-modal';
+
 
 function Main() {
+  Modal.setAppElement('#root');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,14 +41,18 @@ function Main() {
         setLoading(false);
       })
       .catch(err => {
-        setError('Error al cargar platillos.');
+        setError('Error al cargar platillos.', err);
         setLoading(false);
       });
   }, []);
 
   const openModal = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
+    if (!isModalOpen) {
+      setSelectedProduct(product);
+      setIsModalOpen(true);
+    } else {
+      console.log('Modal ya está abierto');
+    }
   };
 
   const closeModal = () => {
@@ -119,12 +126,13 @@ function Main() {
         <Route path="/yourCoupons" element={<YourCoupons />} />
       </Routes><br /><br />
 
-      {selectedProduct && (
+      {isModalOpen && selectedProduct && (
         <ProductModal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           product={selectedProduct}
         />
+
       )}
 
       <Footer />

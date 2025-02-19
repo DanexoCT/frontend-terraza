@@ -30,8 +30,12 @@ function Drinks() {
   }, []);
 
   const openModal = (drink) => {
-    setSelectedDrink(drink);
-    setIsModalOpen(true);
+    if (!isModalOpen) {
+      setSelectedDrink(drink);
+      setIsModalOpen(true);
+    } else {
+      console.log('Modal ya está abierto');
+    }
   };
 
   const closeModal = () => {
@@ -67,7 +71,7 @@ function Drinks() {
       )}
 
       {/* Aquí se incluye el modal */}
-      {selectedDrink && (
+      {isModalOpen && selectedDrink && (
         <ProductModal
           isOpen={isModalOpen}
           onRequestClose={closeModal}

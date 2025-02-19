@@ -136,6 +136,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete='current-password'
             />
           </label>
 
@@ -147,6 +148,7 @@ const Register = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              autoComplete='current-password'
               className={confirmPasswordError ? 'error' : ''}
             />
             {confirmPasswordError && (

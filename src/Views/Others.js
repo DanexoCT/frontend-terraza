@@ -29,8 +29,12 @@ function Others() {
   }, []);
 
   const openModal = (other) => {
-    setSelectedOther(other);
-    setIsModalOpen(true);
+    if (!isModalOpen) {
+      setSelectedOther(other);
+      setIsModalOpen(true);
+    } else {
+      console.log('Modal ya está abierto');
+    }
   };
 
   const closeModal = () => {
@@ -66,7 +70,7 @@ function Others() {
       )}
 
       {/* Aquí se incluye el modal */}
-      {selectedOther && (
+      {isModalOpen && selectedOther && (
         <ProductModal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
