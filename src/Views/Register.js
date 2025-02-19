@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import './Register.css';
+import axios from 'axios';
+const apiUrl = process.env.REACT_APP_API_URL_APP
 
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [secondLastName, setSecondLastName] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellidoP, setApellidoP] = useState('');
+  const [apellidoM, setApellidoM] = useState('');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
@@ -40,26 +42,25 @@ const Register = () => {
     }
 
     const customerData = {
-      nombre: firstName,
-      apellidoP: lastName,
-      apellidoM: secondLastName,
-      correo: email,
-      pass: password,
+      nombre: nombre,
+      apellidoP: apellidoP,
+      apellidoM: apellidoM,
+      email: email,
+      password: password,
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/customers/register', {
-        method: 'POST',
+      const response = await axios.post(`${apiUrl}/customer-register`, customerData, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(customerData),
       });
 
-      const result = await response.json();
+      const result = response.data; // Cambié esto para obtener la respuesta correcta
 
       setSuccessMessage('');
       setGeneralErrorMessage('');
 
-      if (response.ok) {
+      // Verificar si la respuesta contiene el mensaje esperado
+      if (result && result.message) {
         setSuccessMessage(result.message);
         setTimeout(() => {
           setSuccessMessage('');
@@ -70,7 +71,14 @@ const Register = () => {
       }
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
-      setGeneralErrorMessage('Error al enviar el formulario');
+      // Verificar si la respuesta tiene errores directamente desde la API
+      if (error.response && error.response.data && error.response.data.error) {
+        // Mostrar el mensaje de error proporcionado por la API
+        setGeneralErrorMessage(error.response.data.error);
+      } else {
+        // Mensaje genérico de error si no hay uno específico de la API
+        setGeneralErrorMessage('Error al enviar el formulario');
+      }
     }
   };
 
@@ -85,8 +93,8 @@ const Register = () => {
             <input
               type="text"
               placeholder="Nombre(s)"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
               required
             />
           </label>
@@ -96,8 +104,8 @@ const Register = () => {
             <input
               type="text"
               placeholder="Apellido Paterno (Opcional)"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={apellidoP}
+              onChange={(e) => setApellidoP(e.target.value)}
             />
           </label>
 
@@ -106,8 +114,8 @@ const Register = () => {
             <input
               type="text"
               placeholder="Apellido Materno (Opcional)"
-              value={secondLastName}
-              onChange={(e) => setSecondLastName(e.target.value)}
+              value={apellidoM}
+              onChange={(e) => setApellidoM(e.target.value)}
             />
           </label>
 

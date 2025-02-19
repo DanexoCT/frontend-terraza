@@ -9,7 +9,7 @@ const Navbar = () => {
   const [puntos, setPuntos] = useState(0); // Estado para los puntos acumulados
   const menuRef = useRef(null);
   const iconRef = useRef(null);
-  const { isAuthenticated, logout, getUserPoints } = useAuth(); // Accede al contexto
+  const { isAuthenticated, logout } = useAuth(); // Accede al contexto
   const [activeSection, setActiveSection] = useState('');
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const Navbar = () => {
       if (isAuthenticated) {
         try {
           const profileData = await fetchUserProfile();
-          setPuntos(profileData.puntos); // Asumiendo que 'puntosAcumulados' es el campo para los puntos
+          setPuntos(profileData.puntosAcumulados); // Asumiendo que 'puntosAcumulados' es el campo para los puntos
         } catch (error) {
           console.error('Error obteniendo los puntos:', error);
         }
@@ -113,18 +113,18 @@ const Navbar = () => {
               Menú
             </Link>
 
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className={`nav-link ${activeSection === 'login' ? 'active' : ''}`}
               onClick={() => setActiveSection('login')}>
-                Iniciar sesión
+              Iniciar sesión
             </Link>
 
-            <Link 
-              to="/register" 
+            <Link
+              to="/register"
               className={`nav-link ${activeSection === 'register' ? 'active' : ''}`}
               onClick={() => setActiveSection('register')}>
-                Registrarse
+              Registrarse
             </Link>
           </>
         )}

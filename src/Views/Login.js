@@ -4,6 +4,7 @@ import './Login.css';
 import { FaGoogle, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
+const apiUrl = process.env.REACT_APP_API_URL_APP
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,15 +21,15 @@ const Login = () => {
     setErrorMessage(''); // Limpia cualquier mensaje de error previo
 
     try {
-      const response = await axios.post('http://localhost:5000/api/customers/login', {
-        correo: email,
-        pass: password,
+      const response = await axios.post(`${apiUrl}/customer-login`, {
+        email: email,
+        password: password,
       });
 
       console.log('Inicio de sesión exitoso:', response.data);
 
-      // Si el backend devuelve un token, pásalo a la función login
       const token = response.data.token; // Asegúrate de que el backend devuelva el token en este campo
+      localStorage.setItem('sanctum_token', token);
       login(token); // Cambia el estado de autenticación a verdadero con el token
 
       navigate('/'); // Redirecciona después del inicio de sesión exitoso

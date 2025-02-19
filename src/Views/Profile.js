@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEdit, FaSave, FaUser, FaEnvelope, FaIdCard, FaAward } from 'react-icons/fa';
 import './Profile.css';
+const apiUrl = process.env.REACT_APP_API_URL_APP
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -19,15 +20,31 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/customers/profile', {
-          withCredentials: true,
+        // Obtener el token de localStorage
+        const token = localStorage.getItem('sanctum_token');
+
+        // Verificar si el token está disponible
+        if (!token) {
+          console.log('No token found, please log in.');
+          return;
+        }
+
+        // Hacer la solicitud al perfil del cliente con el token
+        const response = await axios.get(`${apiUrl}/customer-perfil`, {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Incluir el token en las cabeceras
+            'Content-Type': 'application/json',
+          },
         });
-        setProfileData(response.data.profileData);
+
+        // Establecer los datos del perfil en el estado
+        setProfileData(response.data);
       } catch (error) {
         console.error('Error al cargar el perfil', error);
         setError('Error al cargar el perfil. Por favor, intenta de nuevo.');
       }
     };
+
     fetchProfileData();
   }, []);
 
@@ -88,7 +105,7 @@ const Profile = () => {
   };
   const imagen = (profileData && profileData.imagen)
     ? profileData.imagen
-    : 'https://via.placeholder.com/150';
+    : 'https://static-00.iconduck.com/assets.00/user-icon-2046x2048-9pwm22pp.png';
 
 
 
@@ -208,19 +225,19 @@ const Profile = () => {
           <div className="form-group">
             <label>Correo: </label>
             <FaEnvelope className="input-icon-profile" /> {/* Icono antes del campo */}
-            <span>{profileData.correo}</span>
+            <span>{profileData.email}</span>
           </div>
 
           <div className="form-group">
             <label>Identificador: </label>
             <FaIdCard className="input-icon-profile" /> {/* Icono antes del campo */}
-            <span>{profileData.identificador}</span>
+            <span>{profileData.userIdentifier}</span>
           </div>
 
           <div className="form-group">
             <label>Puntos: </label>
             <FaAward className="input-icon-profile" /> {/* Icono antes del campo */}
-            <span>{profileData.puntos}</span>
+            <span>{profileData.puntosAcumulados}</span>
           </div>
 
           {/* Mensajes dinámicos */}
