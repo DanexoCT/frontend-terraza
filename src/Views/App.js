@@ -26,11 +26,14 @@ function Main() {
   const location = useLocation();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`http://127.0.0.1:8000/api/product`)
       .then(response => {
-        const filteredProducts = response.data.filter(product =>
-          product.status === 'disponible' && product.tipo === 'platillo'
-        );
+        const filteredProducts = response.data
+          .filter(product => product.status === 1 && product.tipo === 'platillo')
+          .map(product => ({
+            ...product,
+            precio: Number(product.precio).toFixed(2),
+          }))
         setProducts(filteredProducts);
         setLoading(false);
       })
@@ -72,13 +75,13 @@ function Main() {
   return (
     <div className="app">
       {/* Mostrar el título y la barra de navegación de productos solo si no estás en /login, /register o /profile */}
-      {!['/login', '/register', '/profile','/coupons','/yourCoupons'].includes(location.pathname) && (
+      {!['/login', '/register', '/profile', '/coupons', '/yourCoupons'].includes(location.pathname) && (
         <>
-          <br/><br/><br/>
+          <br /><br /><br />
           <h4 className="menu-title">Nuestro Menú</h4>
-          <br/><br/>
+          <br /><br />
           <NavbarProducts />
-          <br/><br/>
+          <br /><br />
         </>
       )}
 
@@ -92,13 +95,13 @@ function Main() {
             ) : products.length > 0 ? (
               <div className="product-list">
                 {products.map((product) => (
-                  <div className="product-card" key={product._id} onClick={() => openModal(product)}>
+                  <div className="product-card" key={product.id} onClick={() => openModal(product)}>
                     <img src={product.imagen} alt={product.nombre} className="product-image" />
                     <div className="product-info">
                       <h2 className="product-name">{product.nombre}</h2>
                       <p className="product-description">{product.descripcion}</p>
                     </div>
-                    <p className="product-price">${product.precio.toFixed(2)}</p>
+                    <p className="product-price">${product.precio}</p>
                   </div>
                 ))}
               </div>
@@ -114,7 +117,7 @@ function Main() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/coupons" element={<Coupons />} />
         <Route path="/yourCoupons" element={<YourCoupons />} />
-      </Routes><br/><br/>
+      </Routes><br /><br />
 
       {selectedProduct && (
         <ProductModal

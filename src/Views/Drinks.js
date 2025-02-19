@@ -10,11 +10,15 @@ function Drinks() {
   const [selectedDrink, setSelectedDrink] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`http://127.0.0.1:8000/api/product`)
       .then(response => {
-        const filteredDrinks = response.data.filter(product => 
-          product.status === 'disponible' && product.tipo === 'bebida'
-        );
+        const filteredDrinks = response.data
+          .filter(product => product.status === 1 && product.tipo === 'bebida')
+          .map(product => ({
+            ...product,
+            precio: Number(product.precio).toFixed(2),
+          })
+          );
 
         setDrinks(filteredDrinks);
         setLoading(false);
@@ -46,7 +50,7 @@ function Drinks() {
           {drinks.map((drink) => (
             <div
               className="product-card"
-              key={drink._id}
+              key={drink.id}
               onClick={() => openModal(drink)} // Abre el modal al hacer clic
             >
               <img src={drink.imagen} alt={drink.nombre} className="product-image" />
@@ -54,7 +58,7 @@ function Drinks() {
                 <h2 className="product-name">{drink.nombre}</h2>
                 <p className="product-description">{drink.descripcion}</p>
               </div>
-              <p className="product-price">${drink.precio.toFixed(2)}</p>
+              <p className="product-price">${drink.precio}</p>
             </div>
           ))}
         </div>

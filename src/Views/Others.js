@@ -10,11 +10,14 @@ function Others() {
   const [selectedOther, setSelectedOther] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products`)
+    axios.get(`http://127.0.0.1:8000/api/product`)
       .then(response => {
-        const filteredOthers = response.data.filter(product => 
-          product.status === 'disponible' && product.tipo === 'otro'
-        );
+        const filteredOthers = response.data.filter(product =>
+          product.status === 1 && product.tipo === 'otro')
+          .map(product => ({
+            ...product,
+            precio: Number(product.precio).toFixed(2),
+          }));
 
         setOthers(filteredOthers);
         setLoading(false);
@@ -46,7 +49,7 @@ function Others() {
           {others.map((other) => (
             <div
               className="product-card"
-              key={other._id}
+              key={other.id}
               onClick={() => openModal(other)} // Abre el modal al hacer clic
             >
               <img src={other.imagen} alt={other.nombre} className="product-image" />
@@ -54,7 +57,7 @@ function Others() {
                 <h2 className="product-name">{other.nombre}</h2>
                 <p className="product-description">{other.descripcion}</p>
               </div>
-              <p className="product-price">${other.precio.toFixed(2)}</p>
+              <p className="product-price">${other.precio}</p>
             </div>
           ))}
         </div>
