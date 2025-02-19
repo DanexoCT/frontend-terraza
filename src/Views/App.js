@@ -17,6 +17,7 @@ import { AuthProvider } from './AuthContext';
 import Modal from 'react-modal';
 
 
+
 function Main() {
   Modal.setAppElement('#root');
   const [products, setProducts] = useState([]);
@@ -29,7 +30,9 @@ function Main() {
   const location = useLocation();
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/product`)
+
+    const apiUrl = process.env.REACT_APP_API_URL_APP
+    axios.get(`${apiUrl}/product`)
       .then(response => {
         const filteredProducts = response.data
           .filter(product => product.status === 1 && product.tipo === 'platillo')

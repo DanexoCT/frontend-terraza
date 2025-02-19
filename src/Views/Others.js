@@ -10,7 +10,8 @@ function Others() {
   const [selectedOther, setSelectedOther] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/product`)
+    const apiUrl = process.env.REACT_APP_API_URL_APP
+    axios.get(`${apiUrl}/product`)
       .then(response => {
         const filteredOthers = response.data.filter(product =>
           product.status === 1 && product.tipo === 'otro')
