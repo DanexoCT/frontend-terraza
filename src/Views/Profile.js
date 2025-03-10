@@ -22,6 +22,7 @@ const Profile = () => {
       try {
         // Obtener el token de localStorage
         const token = localStorage.getItem('sanctum_token');
+        console.log('Token:', token);
 
         // Verificar si el token está disponible
         if (!token) {

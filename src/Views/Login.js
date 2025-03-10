@@ -21,12 +21,13 @@ const Login = () => {
     setErrorMessage(''); // Limpia cualquier mensaje de error previo
 
     try {
+      await axios.get(`${apiUrl}/sanctum/csrf-cookie`, { withCredentials: true });
+
       const response = await axios.post(`${apiUrl}/customer-login`, {
         email: email,
         password: password,
       });
 
-      console.log('Inicio de sesión exitoso:', response.data);
 
       const token = response.data.token; // Asegúrate de que el backend devuelva el token en este campo
       localStorage.setItem('sanctum_token', token);
@@ -45,7 +46,7 @@ const Login = () => {
       setLoading(false);
     }
   };
-
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     // Limpia el mensaje de error cuando se desmonta el componente
     return () => {
@@ -66,6 +67,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete='email'
             />
           </label>
 
@@ -79,6 +81,7 @@ const Login = () => {
             <FaLock className="input-icon" />
             <input
               type="password"
+              name='password'
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

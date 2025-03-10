@@ -127,6 +127,7 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete='email'
             />
             {emailError && (
               <div className="tooltip email-error-tooltip">
