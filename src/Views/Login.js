@@ -33,6 +33,7 @@ const Login = () => {
       localStorage.setItem('sanctum_token', token);
       login(token); // Cambia el estado de autenticación a verdadero con el token
 
+
       navigate('/'); // Redirecciona después del inicio de sesión exitoso
     } catch (error) {
       if (error.response) {
