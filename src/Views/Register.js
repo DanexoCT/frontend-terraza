@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
+import { registerCustomer } from '../services/authServices.js';
 import './Register.css';
-import axios from 'axios';
-const apiUrl = process.env.REACT_APP_API_URL_APP
 
 const Register = () => {
   const [nombre, setNombre] = useState('');
@@ -50,35 +49,14 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post(`${apiUrl}/customer-register`, customerData, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      const result = response.data; // Cambié esto para obtener la respuesta correcta
-
-      setSuccessMessage('');
+      const result = await registerCustomer(customerData);
+      setSuccessMessage(result.message);
       setGeneralErrorMessage('');
-
-      // Verificar si la respuesta contiene el mensaje esperado
-      if (result && result.message) {
-        setSuccessMessage(result.message);
-        setTimeout(() => {
-          setSuccessMessage('');
-          navigate('/login');
-        }, 3000);
-      } else {
-        setGeneralErrorMessage(result.message || 'Error al registrar');
-      }
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000); // Redirige después de 3 segundos
     } catch (error) {
-      console.error('Error al enviar el formulario:', error);
-      // Verificar si la respuesta tiene errores directamente desde la API
-      if (error.response && error.response.data && error.response.data.error) {
-        // Mostrar el mensaje de error proporcionado por la API
-        setGeneralErrorMessage(error.response.data.error);
-      } else {
-        // Mensaje genérico de error si no hay uno específico de la API
-        setGeneralErrorMessage('Error al enviar el formulario');
-      }
+      setGeneralErrorMessage(error.message);
     }
   };
 

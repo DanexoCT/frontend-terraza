@@ -24,7 +24,7 @@
   text-align: center;
   color: #3f3f3f;
   margin-bottom: 30px;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .input-label {
@@ -129,13 +129,11 @@
   text-decoration: underline;
 }
 
-
 /* Icono de advertencia en mensajes de error */
 .warning-icon {
   margin-right: 3px; /* Espacio entre el ícono y el texto */
   font-size: 12px; /* Tamaño del ícono */
 }
-
 
 .login-tooltip {
   display: flex;
@@ -157,7 +155,7 @@
 }
 
 .login-tooltip::after {
-  content: ''; /* Flecha en el tooltip */
+  content: ""; /* Flecha en el tooltip */
   position: absolute;
   top: 100%; /* Parte inferior del tooltip */
   left: 10%; /* Centrar flecha */

@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { useAuth } from './AuthContext'; // Usa el hook useAuth
-import { fetchUserProfile } from './Services.js';
-
+import { getCustomerProfile } from '../services/profileServices.js';
+import { logout } from '../services/authServices.js';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [puntos, setPuntos] = useState(0); // Estado para los puntos acumulados
   const menuRef = useRef(null);
   const iconRef = useRef(null);
-  const { isAuthenticated, logout } = useAuth(); // Accede al contexto
+  const { isAuthenticated, logout: logoutContext } = useAuth(); // Accede al contexto
   const [activeSection, setActiveSection] = useState('');
   const navigate = useNavigate();
 
@@ -43,8 +43,8 @@ const Navbar = () => {
     const loadUserPoints = async () => {
       if (isAuthenticated) {
         try {
-          const profileData = await fetchUserProfile();
-          setPuntos(profileData.puntosAcumulados); // Asumiendo que 'puntosAcumulados' es el campo para los puntos
+          const profileData = await getCustomerProfile();
+          setPuntos(profileData.puntosAcumulados);
         } catch (error) {
           console.error('Error obteniendo los puntos:', error);
         }
@@ -53,9 +53,14 @@ const Navbar = () => {
     loadUserPoints();
   }, [isAuthenticated]);
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      logoutContext();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   };
 
   return (

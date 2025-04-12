@@ -1,53 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { getCustomerProfile, updateCustomerProfile } from '../services/profileServices';
 import { FaEdit, FaSave, FaUser, FaEnvelope, FaIdCard, FaAward } from 'react-icons/fa';
 import './Profile.css';
-const apiUrl = process.env.REACT_APP_API_URL_APP
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
-  const [isEditing, setIsEditing] = useState({
-    nombre: false,
-    apellidoP: false,
-    apellidoM: false,
-    imagen: false,
-  });
+  const [updatedData, setUpdatedData] = useState({});
+  const [isEditing, setIsEditing] = useState({});
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [updatedData, setUpdatedData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        // Obtener el token de localStorage
-        const token = localStorage.getItem('sanctum_token');
-        console.log('Token:', token);
-
-        // Verificar si el token está disponible
-        if (!token) {
-          console.log('No token found, please log in.');
-          return;
+    const storedProfile = sessionStorage.getItem('customerProfile');
+    if (storedProfile) {
+      setProfileData(JSON.parse(storedProfile));
+    } else {
+      const fetchProfile = async () => {
+        try {
+          const data = await getCustomerProfile();
+          setProfileData(data);
+          sessionStorage.setItem('customerProfile', JSON.stringify(data));
+        } catch (error) {
+          if (error.message === 'Token no encontrado') {
+            navigate('/login');
+          } else {
+            setError('Error al cargar el perfil. Intenta nuevamente.');
+          }
         }
+      };
 
-        // Hacer la solicitud al perfil del cliente con el token
-        const response = await axios.get(`${apiUrl}/customer-perfil`, {
-          headers: {
-            'Authorization': `Bearer ${token}`, // Incluir el token en las cabeceras
-            'Content-Type': 'application/json',
-          },
-        });
-
-        // Establecer los datos del perfil en el estado
-        setProfileData(response.data);
-      } catch (error) {
-        console.error('Error al cargar el perfil', error);
-        setError('Error al cargar el perfil. Por favor, intenta de nuevo.');
-      }
-    };
-
-    fetchProfileData();
-  }, []);
+      fetchProfile();
+    }
+  }, [navigate]);
 
   const handleEditToggle = (field) => {
     setIsEditing((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -55,9 +44,15 @@ const Profile = () => {
 
   const handleInputChange = (field, value) => {
     setUpdatedData((prev) => ({ ...prev, [field]: value }));
-  };
 
-  axios.defaults.withCredentials = true;
+    if (field === 'imagen' && value) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        setPreviewImage(fileReader.result);
+      };
+      fileReader.readAsDataURL(value);
+    }
+  };
 
   const handleSave = async (field) => {
     setLoading(true);
@@ -65,58 +60,49 @@ const Profile = () => {
     setSuccessMessage('');
 
     try {
-      let updatedField;
-      let config = { withCredentials: true };
-
-      if (field === 'imagen' && updatedData.imagen) {
-        // Si es una imagen, usar FormData
-        const formData = new FormData();
-        formData.append('imagen', updatedData.imagen);
-
-        updatedField = formData;
-        config.headers = {
-          'Content-Type': 'multipart/form-data',
-        };
-      } else {
-        // Si no es una imagen, usar datos JSON normales
-        updatedField = { [field]: updatedData[field] || profileData[field] };
+      if (field === 'imagen' && !updatedData.imagen) {
+        setError('Por favor selecciona una imagen.');
+        setLoading(false);
+        return;
       }
 
-      // Enviar solicitud PUT con el ID del cliente en la URL
-      const response = await axios.put(`
-        http://localhost:5000/api/customers/update-customer/${profileData.id}`,
-        updatedField,
-        config
-      );
+      const update = field === 'imagen'
+        ? { imagen: updatedData.imagen }
+        : { [field]: updatedData[field] || profileData[field] };
 
-      // Actualizar los datos del perfil localmente
-      setProfileData((prev) => ({ ...prev, ...updatedField }));
-      setIsEditing((prev) => ({ ...prev, [field]: false }));
-      setSuccessMessage(response.data.message || 'Cambios guardados exitosamente.');
-      // Recargar la ventana después de guardar
+      const response = await updateCustomerProfile(profileData.id, update);
+
       if (field === 'imagen') {
-        window.location.reload();
+        const updatedProfile = await getCustomerProfile();
+        setProfileData(updatedProfile);
+        sessionStorage.setItem('customerProfile', JSON.stringify(updatedProfile));
+        setPreviewImage(null);
+        setUpdatedData((prev) => ({ ...prev, imagen: null }));
+      } else {
+        const newProfile = { ...profileData, ...update };
+        setProfileData(newProfile);
+        sessionStorage.setItem('customerProfile', JSON.stringify(newProfile));
       }
-    } catch (error) {
-      console.error('Error al actualizar el perfil', error);
-      setError(error.response?.data?.message || 'No se pudo guardar el cambio. Intenta de nuevo.');
+
+      setSuccessMessage(response.message || 'Actualizado correctamente.');
+      setIsEditing((prev) => ({ ...prev, [field]: false }));
+    } catch (err) {
+      setError(err.message || 'Error al actualizar los datos.');
     } finally {
       setLoading(false);
     }
   };
-  const imagen = (profileData && profileData.imagen)
-    ? profileData.imagen
+
+  const imagen = (previewImage || (profileData && profileData.imagen))
+    ? (previewImage || profileData.imagen)
     : 'https://static-00.iconduck.com/assets.00/user-icon-2046x2048-9pwm22pp.png';
 
-
-
-  if (!profileData) {
-    return <div className="loading-message">Cargando perfil...</div>;
-  }
+  if (!profileData) return <div className="loading-message">Cargando perfil...</div>;
 
   return (
     <div className="profile-container">
       <div className="profile-card">
+
         {/* Imagen */}
         <div className="profile-header">
           {isEditing.imagen ? (
@@ -127,6 +113,14 @@ const Profile = () => {
                 className="image-input"
                 onChange={(e) => handleInputChange('imagen', e.target.files[0])}
               />
+              {previewImage && (
+                <img
+                  src={previewImage}
+                  alt="Vista previa"
+                  className="profile-image"
+                  style={{ marginTop: '10px' }}
+                />
+              )}
               <button className="save-button" onClick={() => handleSave('imagen')}>
                 <FaSave /> Guardar
               </button>
@@ -147,8 +141,9 @@ const Profile = () => {
 
         {/* Información del perfil */}
         <div className="profile-body">
+          {/* Nombre */}
           <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} />
             <label>Nombre(s): </label>
             {isEditing.nombre ? (
               <>
@@ -172,8 +167,9 @@ const Profile = () => {
             )}
           </div>
 
+          {/* Apellido Paterno */}
           <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} />
             <label>Apellido Paterno: </label>
             {isEditing.apellidoP ? (
               <>
@@ -197,8 +193,9 @@ const Profile = () => {
             )}
           </div>
 
+          {/* Apellido Materno */}
           <div className="form-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} /> {/* Icono antes de la etiqueta */}
+            <FaUser className="input-icon-profile-pj" style={{ marginRight: "10px" }} />
             <label>Apellido Materno: </label>
             {isEditing.apellidoM ? (
               <>
@@ -222,22 +219,24 @@ const Profile = () => {
             )}
           </div>
 
-
+          {/* Correo */}
           <div className="form-group">
             <label>Correo: </label>
-            <FaEnvelope className="input-icon-profile" /> {/* Icono antes del campo */}
+            <FaEnvelope className="input-icon-profile" />
             <span>{profileData.email}</span>
           </div>
 
+          {/* Identificador */}
           <div className="form-group">
             <label>Identificador: </label>
-            <FaIdCard className="input-icon-profile" /> {/* Icono antes del campo */}
+            <FaIdCard className="input-icon-profile" />
             <span>{profileData.userIdentifier}</span>
           </div>
 
+          {/* Puntos */}
           <div className="form-group">
             <label>Puntos: </label>
-            <FaAward className="input-icon-profile" /> {/* Icono antes del campo */}
+            <FaAward className="input-icon-profile" />
             <span>{profileData.puntosAcumulados}</span>
           </div>
 
@@ -245,6 +244,7 @@ const Profile = () => {
           <div className="message-container">
             {error && <div className="error-message">{error}</div>}
             {successMessage && <div className="success-message">{successMessage}</div>}
+            {loading && <div className="loading-message">Actualizando...</div>}
           </div>
         </div>
       </div>

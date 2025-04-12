@@ -11,13 +11,13 @@ export const useAuth = () => {
 // Proveedor del contexto
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem('sanctum_token') // Verifica si el token existe al iniciar
+    !!localStorage.getItem('auth_token') // Verifica si el token existe al iniciar
   );
 
 
   // Al cargar el componente, revisa si existe un token en el localStorage o cookies
   useEffect(() => {
-    const token = localStorage.getItem('sanctum_token');
+    const token = localStorage.getItem('auth_token');
     if (!token && isAuthenticated) {
       setIsAuthenticated(false); // Evita el bucle asegurando que el estado cambie primero
       window.location.href = '/';
@@ -25,14 +25,12 @@ export const AuthProvider = ({ children }) => {
   }, [isAuthenticated]);
 
   const login = (token) => {
-    localStorage.setItem('sanctum_token', token); // Guarda el token en localStorage o cookies
+    localStorage.setItem('auth_token', token); // Guarda el token en localStorage o cookies
     setIsAuthenticated(true);
   };
-
-  const logout = (token) => {
-    localStorage.removeItem('sanctum_token'); // Elimina el token al cerrar sesión    setIsAuthenticated(false);
+  const logout = () => {
+    localStorage.removeItem('auth_token');
     setIsAuthenticated(false);
-
   };
 
   return (

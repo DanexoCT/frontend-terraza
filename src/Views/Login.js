@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { FaGoogle, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
-import axios from 'axios';
 import { useAuth } from './AuthContext';
-const apiUrl = process.env.REACT_APP_API_URL_APP
-
+import { loginCustomer } from '../services/authServices.js';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); // Error vacío al iniciar
-  const { login } = useAuth(); // Obtén login desde el contexto
-
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -21,33 +18,16 @@ const Login = () => {
     setErrorMessage(''); // Limpia cualquier mensaje de error previo
 
     try {
-      await axios.get(`${apiUrl}/sanctum/csrf-cookie`, { withCredentials: true });
 
-      const response = await axios.post(`${apiUrl}/customer-login`, {
-        email: email,
-        password: password,
-      });
-
-
-      const token = response.data.token; // Asegúrate de que el backend devuelva el token en este campo
-      localStorage.setItem('sanctum_token', token);
-      login(token); // Cambia el estado de autenticación a verdadero con el token
-
-
-      navigate('/'); // Redirecciona después del inicio de sesión exitoso
+      const { token } = await loginCustomer(email, password);
+      login(token);
+      navigate('/');
     } catch (error) {
-      if (error.response) {
-        setErrorMessage(error.response.data.message || 'Error de autenticación');
-      } else if (error.request) {
-        setErrorMessage('No se recibió respuesta del servidor.');
-      } else {
-        setErrorMessage('Error de conexión. Intenta nuevamente más tarde.');
-      }
+      setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
   };
-  axios.defaults.withCredentials = true;
   useEffect(() => {
     // Limpia el mensaje de error cuando se desmonta el componente
     return () => {

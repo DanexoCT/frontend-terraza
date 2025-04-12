@@ -83,6 +83,7 @@ function Main() {
   };
 
   return (
+
     <div className="app">
       {/* Mostrar el título y la barra de navegación de productos solo si no estás en /login, /register o /profile */}
       {!['/login', '/register', '/profile', '/coupons', '/yourCoupons'].includes(location.pathname) && (
