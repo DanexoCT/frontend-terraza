@@ -1,159 +1,175 @@
 /* Contenedor principal */
 .coupons-container {
-    width: 70%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
+  width: 70%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
 /* Título */
 .title-coupons {
-    font-family: 'Dancing Script', cursive;
-    font-size: 4rem;
-    margin-bottom: 55px;
-    color: #000000;
-    font-weight: 700;
+  font-family: "Dancing Script", cursive;
+  font-size: 4rem;
+  margin-bottom: 55px;
+  color: #000000;
+  font-weight: 700;
 }
 
 .title-yourcoupons {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.8rem;
-    margin-bottom: 55px;
-    color: #000000;
-    font-weight: 700;
+  font-family: "Dancing Script", cursive;
+  font-size: 3.8rem;
+  margin-bottom: 55px;
+  color: #000000;
+  font-weight: 700;
 }
 
 /* Grid de cupones */
 .coupons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
-    gap: 20px;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 20px;
+  justify-items: center;
 }
 
 /* Estilo de cada tarjeta de cupón */
 .coupon-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 15px;
-    padding: 20px;
-    width: 100%;
-    max-width: 32s0px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
-    cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 20px;
+  width: 100%;
+  max-width: 32s0px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+  cursor: pointer;
 }
 
 /* Efecto de hover: aumentar el tamaño y cambiar la sombra */
 .coupon-card:hover {
-    transform: scale(1.05);
-    /* Aumenta el tamaño */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    /* Sombra más profunda */
-    border: 3px solid #af995b;
-    /* Borde de color azul al pasar el cursor */
+  transform: scale(1.05);
+  /* Aumenta el tamaño */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  /* Sombra más profunda */
+  border: 3px solid #af995b;
+  /* Borde de color azul al pasar el cursor */
 }
 
 /* Estilos para los títulos y texto */
 .coupon-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #444;
-    font-weight: 600;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #444;
+  font-weight: 600;
 }
 
 .coupon-card p {
-    font-size: 1rem;
-    margin: 10px 0;
-    color: #666;
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #666;
 }
 
 .coupon-card strong {
-    font-weight: 600;
-    color: #333;
+  font-weight: 600;
+  color: #333;
 }
-
+.coupon-badge {
+  background-color: #fafafa;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+}
+.coupon-badge strong {
+  color: #af995b;
+}
+.coupon-badge:hover {
+  background-color: #f4f4f4;
+  border-color: #bbb;
+}
 /* Estilo de botones (si se reactivara la funcionalidad de canje) */
 .redeem-button {
-    background-color: #af995b;
-    color: white;
-    font-size: 1rem;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 15px;
+  background-color: #af995b;
+  color: white;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 15px;
 }
 
 .redeem-button:hover {
-    background-color: #947c3b;
-    transform: scale(1.05);
-    /* Efecto de aumento del botón */
+  background-color: #947c3b;
+  transform: scale(1.05);
+  /* Efecto de aumento del botón */
 }
 
 /* Opcional: Sombra sutil en el contenedor de los cupones */
 .coupons-grid {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Error and Loading */
 .error-message {
-    background-color: #ff000096;
-    /* Rojo  */
-    color: #771b23;
-    /* Texto rojo oscuro */
-    border: 1px solid #ff000096;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    text-align: center;
+  background-color: #ff000096;
+  /* Rojo  */
+  color: #771b23;
+  /* Texto rojo oscuro */
+  border: 1px solid #ff000096;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .toast {
-    position: fixed;
-    top: 20px;
-    right: 60px;
-    left: 60px;
-    z-index: 9999;
-    padding: 15px 20px;
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    animation: fade-in 0.3s ease-out, fade-out 0.3s ease-in 4s;
+  position: fixed;
+  top: 20px;
+  right: 60px;
+  left: 60px;
+  z-index: 9999;
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  animation: fade-in 0.3s ease-out, fade-out 0.3s ease-in 4s;
 }
 
 .toast.success {
-    background-color: #4caf50;
-    /* Verde para éxito */
+  background-color: #4caf50;
+  /* Verde para éxito */
 }
 
 .toast.error {
-    background-color: #f44336;
-    /* Rojo para errores */
+  background-color: #f44336;
+  /* Rojo para errores */
 }
 
 @keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fade-out {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        opacity: 0;
-    }
+  to {
+    opacity: 0;
+  }
 }

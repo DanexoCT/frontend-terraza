@@ -1,72 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Coupons.css';
 import { useNavigate } from 'react-router-dom'; // Para redirigir a login
-import { fetchUserProfile } from './Services'; // Importar la función para obtener el perfil
+import { useCoupons } from '../hooks/useCoupons.js';
 
 const CouponsView = () => {
-    const [coupons, setCoupons] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [clienteId, setClienteId] = useState(null);
-    const [toast, setToast] = useState(null); // Estado para gestionar las alertas
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchCouponsAndProfile = async () => {
-            try {
-                const couponsResponse = await fetch('http://localhost:5000/api/coupons', {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-
-                if (couponsResponse.status === 401) {
-                    navigate('/login');
-                    return;
-                }
-                const couponsData = await couponsResponse.json();
-                setCoupons(couponsData);
-
-                const userProfile = await fetchUserProfile();
-                setClienteId(userProfile.id);
-            } catch (error) {
-                console.error('Error al cargar los cupones o el perfil:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCouponsAndProfile();
-    }, [navigate]);
-
-    const handleRedeem = async (cuponId) => {
-        if (!clienteId) {
-            setToast({ message: 'Usuario no autenticado o datos de perfil no cargados', type: 'error' });
-            return;
-        }
-
-        try {
-            const response = await fetch(`http://localhost:5000/api/coupons/canjear/${clienteId}/${cuponId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                setToast({ message: 'Cupón canjeado exitosamente', type: 'success' });
-                setTimeout(() => window.location.reload(), 1000); // Recargar página
-            } else {
-                const errorData = await response.json();
-                setToast({ message: `Error al canjear el cupón: ${errorData.message}`, type: 'error' });
-                setTimeout(() => setToast(null), 4000);
-            }
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-            setToast({ message: 'Hubo un problema al intentar canjear el cupón', type: 'error' });
-        }
-    };
+    const { coupons, loading, toast, handleRedeem } = useCoupons(navigate);
 
     if (loading) {
         return <p>Cargando cupones...</p>;
+    }
+    if (!Array.isArray(coupons)) {
+        return <p>No se encontraron cupones disponibles.</p>;
     }
 
     return (
@@ -88,7 +33,7 @@ const CouponsView = () => {
                         <p><strong>Costo en puntos:</strong> {coupon.costoPuntos}</p>
                         <button
                             className="redeem-button"
-                            onClick={() => handleRedeem(coupon._id)}
+                            onClick={() => handleRedeem(coupon.id)}
                         >
                             Canjear
                         </button>
