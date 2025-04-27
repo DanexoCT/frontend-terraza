@@ -28,6 +28,31 @@ export const loginCustomer = async (email, password) => {
     }
 }
 
+export const loginWithGoogle = async (googleToken) => {
+    try {
+        const response = await axios.post(`${apiUrl}/auth/google`, {
+            token: googleToken,
+        });
+        const token = response.data.token;
+        localStorage.setItem('auth_token', token);
+
+        return { token };
+    } catch (error) {
+        let message = 'Error al iniciar sesión con Google.';
+        if (error.response) {
+            message = error.response.data.message || 'Fallo de autenticación con Google.';
+        } else if (error.request) {
+            message = 'No hubo respuesta del servidor.';
+        } else {
+            message = 'Error de red o de conexión.';
+        }
+
+        throw new Error(message);
+    }
+}
+
+
+
 export const registerCustomer = async (customerData) => {
     try {
         const response = await axios.post(`${apiUrl}/customer-register`, customerData, {

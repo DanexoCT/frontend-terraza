@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { FaGoogle, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import { useAuth } from './AuthContext';
-import { loginCustomer } from '../services/authServices.js';
+import { loginCustomer, loginWithGoogle } from '../services/authServices.js';
+import { GoogleLogin } from "@react-oauth/google";
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,6 +36,17 @@ const Login = () => {
       setErrorMessage('');
     };
   }, []);
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const { credential } = credentialResponse;
+      const { token } = await loginWithGoogle(credential);
+      login(token); // desde tu contexto
+      navigate('/');
+    } catch (error) {
+      console.error('Google login error:', error.message);
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <div className="auth-wrapper">
@@ -74,9 +87,14 @@ const Login = () => {
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Cargando...' : 'Iniciar Sesión'}
           </button>
-          <button className="google-login">
-            <FaGoogle /> Iniciar Sesión con Google
-          </button>
+          <div className="google-login">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => setErrorMessage("Error al iniciar sesión con Google.")}
+              useOneTap
+            />
+          </div>
+
         </form>
 
         <div className="forgot-password">
