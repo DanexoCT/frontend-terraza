@@ -87,13 +87,23 @@ const Login = () => {
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Cargando...' : 'Iniciar Sesión'}
           </button>
-          <div className="google-login">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={() => setErrorMessage("Error al iniciar sesión con Google.")}
-              useOneTap
-            />
-          </div>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setErrorMessage("Error al iniciar sesión con Google.")}
+            useOneTap
+            render={(renderProps) => (
+              <button
+                type="button"
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                <FaGoogle className="google-icon" /> Iniciar sesión con Google
+              </button>
+            )}
+
+          />
+
+
 
         </form>
 
