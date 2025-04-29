@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';
-import { useAuth } from './AuthContext'; // Usa el hook useAuth
+import '../css/Navbar.css';
+import { useAuth } from '../services/AuthContext.js'; // Usa el hook useAuth
 import { getCustomerProfile } from '../services/profileServices.js';
 import { logout } from '../services/authServices.js';
 const Navbar = () => {

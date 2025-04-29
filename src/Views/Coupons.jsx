@@ -1,5 +1,5 @@
 import React from 'react';
-import './Coupons.css';
+import '../css/Coupons.css';
 import { useNavigate } from 'react-router-dom'; // Para redirigir a login
 import { useCoupons } from '../hooks/useCoupons.js';
 

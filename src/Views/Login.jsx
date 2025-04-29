@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css';
+import '../css/Login.css';
 import { FaGoogle, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../services/AuthContext.js';
 import { loginCustomer, loginWithGoogle } from '../services/authServices.js';
 import { GoogleLogin } from "@react-oauth/google";
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCustomerProfile, updateCustomerProfile } from '../services/profileServices';
 import { FaEdit, FaSave, FaUser, FaEnvelope, FaIdCard, FaAward } from 'react-icons/fa';
-import './Profile.css';
+import '../css/Profile.css';
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);

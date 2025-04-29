@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import { registerCustomer } from '../services/authServices.js';
-import './Register.css';
+import '../css/Register.css';
 
 const Register = () => {
   const [nombre, setNombre] = useState('');

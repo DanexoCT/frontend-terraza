@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { useMediaQuery } from '@mui/material';
-import './ProductModal.css';
+import '../css/ProductModal.css';
 
 
 const ProductModal = ({ isOpen, onRequestClose, product }) => {
