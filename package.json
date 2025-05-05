@@ -2,7 +2,6 @@
   "name": "menu-react",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@babel/runtime": "^7.27.0",
     "@emotion/react": "^11.13.3",
